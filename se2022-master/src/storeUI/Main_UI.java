@@ -22,6 +22,7 @@ import javax.swing.SpringLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -29,10 +30,17 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
+import java.util.Calendar;
+import java.util.Date;
 
-public class Main_UI {
+import javax.swing.JLabel;
+import java.util.Calendar;
+
+public class Main_UI implements Runnable {
 	private JFrame frame;
-	
+	private JLabel clock;
+	private Thread thread;
+	private SimpleDateFormat sf;
 	/**
 	 * Launch the application.
 	 */
@@ -135,12 +143,7 @@ public class Main_UI {
 		nowEmp.setFont(new Font("굴림", Font.PLAIN, 12));
 		nowEmp.setText("근무 직원: " + nowU.getName());
 		Info.add(nowEmp);
-
-		JTextPane date = new JTextPane();
-		date.setBounds(413, 0, 147, 24);
-		date.setEditable(false);
-		date.setText("2022-05-04 13:04:23 (수)");
-		Info.add(date);
+		
 		
 		JTextPane storeName = new JTextPane();
 		storeName.setText("OO마트");
@@ -148,6 +151,16 @@ public class Main_UI {
 		storeName.setFont(new Font("굴림", Font.BOLD, 40));
 		storeName.setBounds(0, 0, 247, 55);
 		Info.add(storeName);
+
+		clock = new JLabel("New label");
+		clock.setFont(new Font("Gulim", Font.PLAIN, 12));
+		sf = new SimpleDateFormat("yyyy년MM월dd일 a hh:mm:ss");
+		if (thread == null) {
+			thread = new Thread(this);
+			thread.start();
+		}
+		clock.setBounds(390, 0, 200, 15);
+		Info.add(clock);
 
 		JButton Manager = new JButton("관리자 모드 진입");
 		Manager.addActionListener(new ActionListener() {
@@ -190,5 +203,16 @@ public class Main_UI {
 
 	public void dispose() {
 		frame.dispose();
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while (true) {
+			clock.setText(sf.format(new Date()));
+			try {
+				Thread.sleep(1000);
+				} catch (InterruptedException e){}
+			}
+		
 	}
 }
