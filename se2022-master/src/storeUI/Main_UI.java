@@ -130,7 +130,7 @@ public class Main_UI {
 		
 		control.EmpChange nowU = new control.EmpChange();
 		JTextPane nowEmp = new JTextPane();
-		nowEmp.setBounds(466, 34, 94, 21);
+		nowEmp.setBounds(446, 34, 114, 21);
 		nowEmp.setEditable(false);
 		nowEmp.setFont(new Font("굴림", Font.PLAIN, 12));
 		nowEmp.setText("근무 직원: " + nowU.getName());
