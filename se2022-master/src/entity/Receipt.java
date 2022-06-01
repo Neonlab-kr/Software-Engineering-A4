@@ -38,7 +38,7 @@ public class Receipt {
 		this.receiptID = receiptID;
 		String sql = "SELECT * FROM `Receipt_Table` WHERE Receipt_Code = " + receiptID;
 		try {
-			ResultSet receipt = db.executeQurey(sql);
+			ResultSet receipt = db.executeQuery(sql);
 			while(receipt.next()) {
 				this.purchaseDate = receipt.getString(2);
 				this.paymentMethod = receipt.getString(3);
@@ -54,7 +54,7 @@ public class Receipt {
 		String sqlString = "SELECT Item_Table.Item_Code, Item_Table.Item_Name, Purchased_Items_List_Table.Sales_Quantity, Item_Table.Item_Price "
 				+"FROM Item_Table LEFT JOIN Purchased_Items_List_Table ON Item_Table.Item_Code = Purchased_Items_List_Table.Item_Code AND Purchased_Items_List_Table.Receipt_Code = " + receiptID  + " WHERE Sales_Quantity IS NOT NULL";
 		try {
-			ResultSet receiptlistResultSet = db.executeQurey(sqlString);
+			ResultSet receiptlistResultSet = db.executeQuery(sqlString);
 			while(receiptlistResultSet.next()) {
 				productList.add(new Item(receiptlistResultSet.getString(1),receiptlistResultSet.getString(2),receiptlistResultSet.getInt(3),receiptlistResultSet.getInt(4)));
 			}
@@ -66,14 +66,14 @@ public class Receipt {
 	
 	public ResultSet getReceiptList() {
 		String sql = "SELECT * FROM `Receipt_Table`";
-		return db.executeQurey(sql);
+		return db.executeQuery(sql);
 	}
 	
 	public int max_receiptnum() {
 		int num =0;
 		String number = "SELECT MAX(`Receipt_Code`) FROM `Receipt_Table`";
 		try {
-			ResultSet maxnum = db.executeQurey(number);
+			ResultSet maxnum = db.executeQuery(number);
 			if(maxnum.next()) {
 				num = maxnum.getInt(1) + 1;
 			}
@@ -87,27 +87,27 @@ public class Receipt {
 	public void create_receipt(String method) {
 		receiptID = max_receiptnum();
 		String sql = "INSERT INTO `Receipt_Table` (`Receipt_Code`, `Payment_Method` , Receipt_Table.Balance ) VALUES ('6', '" + method + "' , '" + balance + "' )";
-		db.executeQurey(sql);
+		db.executeQuery(sql);
 		for(int i =0;i<productList.size();i++) {
 			String purchase = "INSERT INTO `Purchased_Items_List_Table` (`Receipt_Code`, `Item_Code`, `Sales_Quantity`) VALUES ('" + receiptID + "', '" + productList.get(i).getBarcode() + " ', '" + productList.get(i).getStock() + "')";
 			String subStock = "UPDATE Item_Table set Stock = Stock - '" + productList.get(i).getStock() + "' "
 					+ "WHERE Item_Code = '" + productList.get(i).getBarcode() + "'";	
-			db.executeQurey(purchase);
-			db.executeQurey(subStock);
+			db.executeQuery(purchase);
+			db.executeQuery(subStock);
 		}
 	}
 	
 	public void updatepayment(int id) {
 		String str = "UPDATE Receipt_Table SET Payment_Method = 'Refund' WHERE Receipt_Table.Receipt_Code = " + id;
-		db.executeQurey(str);
+		db.executeQuery(str);
 	}
 	public void updaterefundDB(int stock,String itemID) {
 		String str = "UPDATE Item_Table set Stock = Stock + "+ stock +" WHERE Item_Code = " + itemID;
-		db.executeQurey(str);
+		db.executeQuery(str);
 	}
 	public void updatebalance(int id) {
 		String str = "UPDATE Receipt_Table SET Balance = 0 WHERE Receipt_Table.Receipt_Code = " + id;
-		db.executeQurey(str);
+		db.executeQuery(str);
 	}
 	
 	public void setItems(ArrayList<Item> items) {

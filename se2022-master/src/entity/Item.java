@@ -31,7 +31,7 @@ public class Item {
 		this.barcode = itemID;
 		String sql = "SELECT Item_Name , Item_Price FROM Item_Table WHERE Item_Code = '" + barcode + "'";
 		try {
-			ResultSet receipt = db.executeQurey(sql);
+			ResultSet receipt = db.executeQuery(sql);
 			if(receipt == null) {
 				return;
 			}
