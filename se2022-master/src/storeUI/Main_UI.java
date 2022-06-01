@@ -41,6 +41,7 @@ public class Main_UI implements Runnable {
 	private JLabel clock;
 	private Thread thread;
 	private SimpleDateFormat sf;
+
 	/**
 	 * Launch the application.
 	 */
@@ -135,7 +136,7 @@ public class Main_UI implements Runnable {
 		Info.setBounds(14, 10, 560, 55);
 		frame.getContentPane().add(Info);
 		Info.setLayout(null);
-		
+
 		control.EmpChange nowU = new control.EmpChange();
 		JTextPane nowEmp = new JTextPane();
 		nowEmp.setBounds(446, 34, 114, 21);
@@ -143,8 +144,7 @@ public class Main_UI implements Runnable {
 		nowEmp.setFont(new Font("굴림", Font.PLAIN, 12));
 		nowEmp.setText("근무 직원: " + nowU.getName());
 		Info.add(nowEmp);
-		
-		
+
 		JTextPane storeName = new JTextPane();
 		storeName.setText("OO마트");
 		storeName.setEditable(false);
@@ -172,7 +172,7 @@ public class Main_UI implements Runnable {
 		});
 		Manager.setBounds(414, 265, 160, 130);
 		frame.getContentPane().add(Manager);
-		
+
 		JButton empChangebtn = new JButton("직원 교대");
 		empChangebtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -183,7 +183,7 @@ public class Main_UI implements Runnable {
 		});
 		empChangebtn.setBounds(414, 75, 158, 28);
 		frame.getContentPane().add(empChangebtn);
-		
+
 		JButton customerbtn = new JButton("고객 관리");
 		customerbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -194,7 +194,7 @@ public class Main_UI implements Runnable {
 		});
 		customerbtn.setBounds(412, 111, 160, 67);
 		frame.getContentPane().add(customerbtn);
-		
+
 	}
 
 	public void setVisible(boolean b) {
@@ -204,6 +204,7 @@ public class Main_UI implements Runnable {
 	public void dispose() {
 		frame.dispose();
 	}
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -211,8 +212,8 @@ public class Main_UI implements Runnable {
 			clock.setText(sf.format(new Date()));
 			try {
 				Thread.sleep(1000);
-				} catch (InterruptedException e){}
+			} catch (InterruptedException e) {
 			}
-		
+		}
 	}
 }
