@@ -13,8 +13,8 @@ public class EmpChange {
 	private String today = formatter.format(cal.getTime());
 	Timestamp Date = Timestamp.valueOf(today);
 	
-	ResultSet un = db.executeQurey("SELECT Employee_ID FROM Employee_Table");
-	ResultSet nowU = db.executeQurey("SELECT Employee_ID FROM Attendance_Table WHERE End_Timestamp IS NULL");
+	ResultSet un = db.executeQuery("SELECT Employee_ID FROM Employee_Table");
+	ResultSet nowU = db.executeQuery("SELECT Employee_ID FROM Attendance_Table WHERE End_Timestamp IS NULL");
 	
 	public boolean idChange(String input) {
 		boolean check = true;
