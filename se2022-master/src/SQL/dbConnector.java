@@ -29,7 +29,7 @@ public class dbConnector {
 	}
 	
 	
-	public ResultSet executeQurey(String sql) {
+	public ResultSet executeQuery(String sql) {
 		//SQL문 실행하기 위한 메소드 - Parameter : String객체로 만든 SQL문
 		//실행결과는 ResultSet으로 반환
 		System.out.println(sql);
