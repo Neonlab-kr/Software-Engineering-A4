@@ -8,6 +8,9 @@ import net.miginfocom.swing.MigLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import control.EmpChange;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
@@ -28,9 +31,8 @@ import javax.swing.UIManager;
 import javax.swing.JTextField;
 
 public class Main_UI {
-
 	private JFrame frame;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -125,12 +127,13 @@ public class Main_UI {
 		Info.setBounds(14, 10, 560, 55);
 		frame.getContentPane().add(Info);
 		Info.setLayout(null);
-
+		
+		control.EmpChange nowU = new control.EmpChange();
 		JTextPane nowEmp = new JTextPane();
 		nowEmp.setBounds(466, 34, 94, 21);
 		nowEmp.setEditable(false);
 		nowEmp.setFont(new Font("굴림", Font.PLAIN, 12));
-		nowEmp.setText("근무 직원: OOO");
+		nowEmp.setText("근무 직원: " + nowU.getUser());
 		Info.add(nowEmp);
 
 		JTextPane date = new JTextPane();
@@ -177,7 +180,7 @@ public class Main_UI {
 		});
 		customerbtn.setBounds(412, 111, 160, 67);
 		frame.getContentPane().add(customerbtn);
-
+		
 	}
 
 	public void setVisible(boolean b) {

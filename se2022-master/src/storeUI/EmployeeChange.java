@@ -3,6 +3,7 @@ package storeUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -44,7 +45,7 @@ public class EmployeeChange {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("직원교대");
@@ -81,7 +82,15 @@ public class EmployeeChange {
 		JButton empChangebtn = new JButton("교대하기");
 		empChangebtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				control.EmpChange econtrol = new control.EmpChange();
+				boolean check = econtrol.idChange(changedEmp.getText());
+				if (check == false) {
+					JOptionPane.showMessageDialog(null, "잘못된 직원을 입력하였습니다.","오류", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "직원이 변경되었습니다.","교대 성", JOptionPane.PLAIN_MESSAGE);
+					frame.dispose();
+				}
 			}
 		});
 		empChangebtn.setBounds(239, 10, 97, 52);
