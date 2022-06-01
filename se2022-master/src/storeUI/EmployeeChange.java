@@ -68,9 +68,11 @@ public class EmployeeChange {
 		changedEmpTxt.setBounds(40, 41, 71, 21);
 		panel.add(changedEmpTxt);
 		
+		control.EmpChange econtrol = new control.EmpChange();
 		empNow = new JTextField();
 		empNow.setEnabled(false);
 		empNow.setBounds(111, 10, 116, 21);
+		empNow.setText(econtrol.getName());
 		panel.add(empNow);
 		empNow.setColumns(10);
 		
@@ -82,13 +84,14 @@ public class EmployeeChange {
 		JButton empChangebtn = new JButton("교대하기");
 		empChangebtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				control.EmpChange econtrol = new control.EmpChange();
 				boolean check = econtrol.idChange(changedEmp.getText());
 				if (check == false) {
 					JOptionPane.showMessageDialog(null, "잘못된 직원을 입력하였습니다.","오류", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "직원이 변경되었습니다.","교대 성", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "직원이 변경되었습니다.","교대 성공", JOptionPane.PLAIN_MESSAGE);
+					Main_UI mainframe = new Main_UI();
+					mainframe.setVisible(true);
 					frame.dispose();
 				}
 			}

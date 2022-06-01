@@ -133,7 +133,7 @@ public class Main_UI {
 		nowEmp.setBounds(466, 34, 94, 21);
 		nowEmp.setEditable(false);
 		nowEmp.setFont(new Font("굴림", Font.PLAIN, 12));
-		nowEmp.setText("근무 직원: " + nowU.getUser());
+		nowEmp.setText("근무 직원: " + nowU.getName());
 		Info.add(nowEmp);
 
 		JTextPane date = new JTextPane();
@@ -165,6 +165,7 @@ public class Main_UI {
 			public void actionPerformed(ActionEvent e) {
 				EmployeeChange ecframe = new EmployeeChange();
 				ecframe.setVisible(true);
+				frame.dispose();
 			}
 		});
 		empChangebtn.setBounds(414, 75, 158, 28);
