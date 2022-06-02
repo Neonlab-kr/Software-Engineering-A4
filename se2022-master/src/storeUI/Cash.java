@@ -63,7 +63,7 @@ public class Cash {
 		frame = new JFrame();
 		frame.setEnabled(true);
 		frame.setTitle("현금결제");
-		frame.setBounds(100, 100, 337, 140);
+		frame.setBounds(100, 100, 442, 140);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -138,6 +138,17 @@ public class Cash {
 		});
 		calculator_button.setBounds(211, 10, 97, 80);
 		panel.add(calculator_button);
+		
+		JButton backbtn = new JButton("뒤로가기");
+		backbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Product_Sell_UI gsframe = new Product_Sell_UI();
+				gsframe.setVisible(true);
+				frame.dispose();
+			}
+		});
+		backbtn.setBounds(323, 10, 97, 80);
+		panel.add(backbtn);
 	}
 	
 	public void setVisible(boolean b) {
