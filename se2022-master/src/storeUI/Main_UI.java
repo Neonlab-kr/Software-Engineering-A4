@@ -32,9 +32,7 @@ import javax.swing.UIManager;
 import javax.swing.JTextField;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.swing.JLabel;
-import java.util.Calendar;
 
 public class Main_UI implements Runnable {
 	private JFrame frame;
