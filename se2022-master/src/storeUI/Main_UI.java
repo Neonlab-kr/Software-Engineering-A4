@@ -159,7 +159,7 @@ public class Main_UI implements Runnable {
 			thread = new Thread(this);
 			thread.start();
 		}
-		clock.setBounds(390, 0, 200, 15);
+		clock.setBounds(380, 0, 210, 15);
 		Info.add(clock);
 
 		JButton Manager = new JButton("관리자 모드 진입");
@@ -178,7 +178,6 @@ public class Main_UI implements Runnable {
 			public void actionPerformed(ActionEvent e) {
 				EmployeeChange ecframe = new EmployeeChange();
 				ecframe.setVisible(true);
-				frame.dispose();
 			}
 		});
 		empChangebtn.setBounds(414, 75, 158, 28);

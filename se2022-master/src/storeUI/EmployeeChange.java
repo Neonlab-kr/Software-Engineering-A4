@@ -18,6 +18,7 @@ public class EmployeeChange {
 	private JFrame frame;
 	private JTextField empNow;
 	private JTextField changedEmp;
+	private JButton backbtn;
 
 	/**
 	 * Launch the application.
@@ -49,7 +50,7 @@ public class EmployeeChange {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("직원교대");
-		frame.setBounds(100, 100, 366, 116);
+		frame.setBounds(100, 100, 455, 116);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -96,8 +97,17 @@ public class EmployeeChange {
 				}
 			}
 		});
-		empChangebtn.setBounds(239, 10, 97, 52);
+		empChangebtn.setBounds(230, 10, 97, 52);
 		panel.add(empChangebtn);
+		
+		backbtn = new JButton("뒤로가기");
+		backbtn.setBounds(330, 10, 97, 52);
+		panel.add(backbtn);
+		backbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 	}
 	public void setVisible(boolean b) {
 		frame.setVisible(b);
