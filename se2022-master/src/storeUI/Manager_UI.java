@@ -3,6 +3,7 @@ package storeUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextPane;
@@ -10,11 +11,16 @@ import java.awt.Font;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
-public class Manager_UI {
+public class Manager_UI implements Runnable {
 
 	private JFrame frame;
+	private JLabel clock;
+	private Thread thread;
+	private SimpleDateFormat sf;
 
 	/**
 	 * Launch the application.
@@ -61,10 +67,14 @@ public class Manager_UI {
 		infotxt.setText("관리자모드");
 		info.add(infotxt);
 		
-		JTextPane date = new JTextPane();
-		date.setEditable(false);
-		date.setText("2022-05-04 13:04:23 (수)");//현재 시간 설정
-		info.add(date, BorderLayout.EAST);
+		clock = new JLabel("New label");
+		clock.setFont(new Font("Gulim", Font.PLAIN, 12));
+		sf = new SimpleDateFormat("yyyy년MM월dd일 a hh:mm:ss");
+		if (thread == null) {
+			thread = new Thread(this);
+			thread.start();
+		}
+		info.add(clock, BorderLayout.EAST);
 		
 		JButton move_sales = new JButton("매장매출조회");
 		move_sales.addActionListener(new ActionListener() {
@@ -127,5 +137,16 @@ public class Manager_UI {
 
 	public void dispose() {
 		frame.dispose();
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while (true) {
+			clock.setText(sf.format(new Date()));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 }
