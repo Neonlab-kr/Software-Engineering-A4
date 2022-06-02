@@ -9,10 +9,15 @@ public class PasswordControl {
 
 	public boolean pwCheck(String pw) {
 		boolean check = false;
+		String DBpassword = null;
+		password = pw;
 		String sql = "SELECT Password FROM Password_Table";
 		ResultSet rs = db.executeQuery(sql);
 		try {
-			if (password.equals(rs.getString("Password")))
+			while (rs.next()) {
+				DBpassword = rs.getString("Password");
+			}
+			if (password.equals(DBpassword))
 				check = true;
 			else
 				check = false;
@@ -27,9 +32,5 @@ public class PasswordControl {
 				}
 		}
 		return check;
-	}
-
-	public void setPw(String pw) {
-		password = pw;
 	}
 }
