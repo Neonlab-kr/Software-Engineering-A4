@@ -7,7 +7,7 @@ import entity.Receipt;
 
 public class Product_Return_Ctrl {
 	private Receipt receipt;
-	ArrayList<Item> items;
+	ArrayList<Item> items = new ArrayList<Item>();
 	
 	public Object[][] product_receiptSearch(String receiptID){//입력된 영수증 번호로 해당 내역 조회
 		receipt = new Receipt();

@@ -47,7 +47,7 @@ public class ReceiptCheck {
 		if(receipt.max_receiptnum() == 0)//영수증이 존재하지 않을 경우 null
 			return null;	
 		int maxnum = receipt.max_receiptnum();//영수증 최대번호 받아오기
-		Object[][] arr = new Object[maxnum-1][4];
+		Object[][] arr = new Object[maxnum][4];
 		ResultSet receiptlist = receipt.getReceiptList();//영수증 리스트 받아오기
 		try {
 			int i =0;
