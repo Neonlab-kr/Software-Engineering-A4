@@ -14,10 +14,10 @@ import java.awt.event.ActionEvent;
 public class AddItemUI {
 
 	private JFrame frame;
-	private JTextField barcode;
-	private JTextField itemName;
-	private JTextField price;
-	private JTextField stock;
+	public JTextField barcode;
+	public JTextField itemName;
+	public JTextField price;
+	public JTextField stock;
 
 	/**
 	 * Launch the application.

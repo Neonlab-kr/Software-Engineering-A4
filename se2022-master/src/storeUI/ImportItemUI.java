@@ -18,7 +18,7 @@ public class ImportItemUI {
 	public JTextField goodsNum;
 	public JTextField price;
 	public JTextField goodsName;
-	private JTextField barcode;
+	public JTextField barcode;
 
 	/**
 	 * Launch the application.
