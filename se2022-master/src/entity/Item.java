@@ -29,7 +29,7 @@ public class Item {
 	
 	public void getItemDB(String itemID) {
 		this.barcode = itemID;
-		String sql = "SELECT Item_Name , Item_Price FROM Item_Table WHERE Item_Code = '" + barcode + "'";
+		String sql = "SELECT Item_Name , Item_Price, Stock FROM Item_Table WHERE Item_Code = '" + barcode + "'";
 		try {
 			ResultSet receipt = db.executeQuery(sql);
 			if(receipt == null) {
@@ -38,7 +38,7 @@ public class Item {
 			while(receipt.next()) {
 				this.itemName = receipt.getString(1);
 				this.price = receipt.getInt(2);
-				this.stock =1;
+				this.stock =receipt.getInt(3);
 			}
 		} catch (SQLException e) {
 			System.out.println("DB연결이 실패하거나, SQL문에 오류가 있습니다.");
