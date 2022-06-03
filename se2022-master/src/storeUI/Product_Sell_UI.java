@@ -296,5 +296,7 @@ public class Product_Sell_UI {
 	}
 	public void table_clear() {
 		sell_Ctrl.clear();
+		setTable(null);
+		all_money.setText("");
 	}
 }
