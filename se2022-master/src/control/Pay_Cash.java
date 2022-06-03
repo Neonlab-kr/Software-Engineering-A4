@@ -17,7 +17,7 @@ public class Pay_Cash extends Product_Pay_Ctrl{
 	
 	@Override
 	public void product_pay() {//결제처리시 영수증 생성부분 작성
-		receipt.create_receipt("Cash");
+		check_state(receipt.create_receipt("Cash"));
 	}
 	
 	public String moneyChanges(String money) {//잔돈 계산하여 전달
