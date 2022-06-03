@@ -7,7 +7,6 @@ import java.util.Calendar;
 public class EmpChange {
 	SQL.dbConnector db = new SQL.dbConnector();
 	Connection conn = db.getConnection();
-	PreparedStatement pstmt;
 	private String id;
 	private String nowuser;
 	private String inputid;
@@ -25,8 +24,6 @@ public class EmpChange {
 	ResultSet un = db.executeQuery("SELECT Employee_ID FROM Employee_Table");
 	ResultSet nowU = db.executeQuery(sql_selectuser);
 	ResultSet attTable = db.executeQuery("SELECT Employee_ID FROM Attendance_Table");
-	ResultSet username = db.executeQuery(
-			"SELECT Employee_Name FROM Employee_Table WHERE Employee_Table.Employee_ID IN (" + sql_selectuser + ")");
 
 	public boolean idChange(String input) {
 		boolean check = true;
@@ -56,6 +53,8 @@ public class EmpChange {
 	}
 
 	public void dateRecord() {
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		try {
 			boolean ch = true;
 			while (attTable.next()) {
@@ -82,10 +81,10 @@ public class EmpChange {
 				pstmt.executeUpdate();
 			}
 
-			pstmt = conn.prepareStatement(sql_changeduser);
-			pstmt.setTimestamp(1, Date);
-			pstmt.setString(2, getUser());
-			pstmt.execute();
+			pstmt2 = conn.prepareStatement(sql_changeduser);
+			pstmt2.setTimestamp(1, Date);
+			pstmt2.setString(2, getUser());
+			pstmt2.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,6 +97,11 @@ public class EmpChange {
 			if (pstmt != null)
 				try {
 					pstmt.close();
+				} catch (Exception e) {
+				}
+			if (pstmt2 != null)
+				try {
+					pstmt2.close();
 				} catch (Exception e) {
 				}
 			if (conn != null)
@@ -131,6 +135,7 @@ public class EmpChange {
 	}
 
 	public String getName() {
+		ResultSet username = db.executeQuery("SELECT Employee_Name FROM Employee_Table WHERE Employee_Table.Employee_ID IN (" + sql_selectuser + ")");
 		try {
 			while (username.next()) {
 				nowname = username.getString("Employee_Name");

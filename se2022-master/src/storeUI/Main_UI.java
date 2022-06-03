@@ -39,7 +39,8 @@ public class Main_UI implements Runnable {
 	private JLabel clock;
 	private Thread thread;
 	private SimpleDateFormat sf;
-
+	private control.EmpChange nowU;
+	private JTextPane nowEmp;
 	/**
 	 * Launch the application.
 	 */
@@ -135,9 +136,9 @@ public class Main_UI implements Runnable {
 		frame.getContentPane().add(Info);
 		Info.setLayout(null);
 
-		control.EmpChange nowU = new control.EmpChange();
-		JTextPane nowEmp = new JTextPane();
-		nowEmp.setBounds(446, 34, 114, 21);
+		nowU = new control.EmpChange();
+		nowEmp = new JTextPane();
+		nowEmp.setBounds(432, 34, 128, 21);
 		nowEmp.setEditable(false);
 		nowEmp.setFont(new Font("굴림", Font.PLAIN, 12));
 		nowEmp.setText("근무 직원: " + nowU.getName());
@@ -157,7 +158,7 @@ public class Main_UI implements Runnable {
 			thread = new Thread(this);
 			thread.start();
 		}
-		clock.setBounds(380, 0, 210, 15);
+		clock.setBounds(393, 0, 167, 15);
 		Info.add(clock);
 
 		JButton Manager = new JButton("관리자 모드 진입");
@@ -207,6 +208,7 @@ public class Main_UI implements Runnable {
 		// TODO Auto-generated method stub
 		while (true) {
 			clock.setText(sf.format(new Date()));
+			nowEmp.setText("근무 직원: " + nowU.getName());
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

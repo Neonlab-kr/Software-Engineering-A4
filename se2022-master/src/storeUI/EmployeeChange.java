@@ -91,8 +91,6 @@ public class EmployeeChange {
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "직원이 변경되었습니다.","교대 성공", JOptionPane.PLAIN_MESSAGE);
-					Main_UI mainframe = new Main_UI();
-					mainframe.setVisible(true);
 					frame.dispose();
 				}
 			}
