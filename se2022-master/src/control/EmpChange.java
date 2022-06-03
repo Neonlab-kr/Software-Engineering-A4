@@ -18,14 +18,14 @@ public class EmpChange {
 
 	String sql_insertuser = "INSERT INTO Attendance_Table(Employee_ID, Start_Timestamp, End_Timestamp) VALUES(?, ?, ?)";
 	String sql_nowuser = "UPDATE Attendance_Table SET Start_Timestamp=?, End_Timestamp=? WHERE Employee_ID=?";
-	String sql_changeduser = "UPDATE Attendance_Table SET End_Timestamp=? WHERE Employee_ID=?";
+	String sql_changeduser = "UPDATE Attendance_Table SET End_Timestamp=? WHERE End_Timestamp IS NULL";
 	String sql_selectuser = "SELECT Employee_ID FROM Attendance_Table WHERE End_Timestamp IS NULL";
 
 	ResultSet un = db.executeQuery("SELECT Employee_ID FROM Employee_Table");
 	ResultSet nowU = db.executeQuery(sql_selectuser);
 	ResultSet attTable = db.executeQuery("SELECT Employee_ID FROM Attendance_Table");
 
-	public boolean idChange(String input) {
+	public boolean idChange(String input) {//입력한 직원이 직원 테이블에 존재하는지 체크함
 		boolean check = true;
 		inputid = input;
 		try {
@@ -56,44 +56,20 @@ public class EmpChange {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		try {
-			boolean ch = true;
-			while (attTable.next()) {
-				id = attTable.getString("Employee_ID");
-				if (id.equals(inputid)) {
-					ch = true;
-					break;
-				} else
-					ch = false;
-			}
-			System.out.println(ch);
-			if (!ch) {
-				System.out.println("기존 사용자" + getUser() + "새 사용자" + inputid);
-				pstmt = conn.prepareStatement(sql_insertuser);
-				pstmt.setString(1, inputid);
-				pstmt.setTimestamp(2, Date);
-				pstmt.setTimestamp(3, null);
-				pstmt.executeUpdate();
-			} else {
-				pstmt = conn.prepareStatement(sql_nowuser);
-				pstmt.setTimestamp(1, Date);
-				pstmt.setTimestamp(2, null);
-				pstmt.setString(3, inputid);
-				pstmt.executeUpdate();
-			}
-
+			System.out.println("기존 사용자: " + getUser() + "새 사용자: " + inputid);
 			pstmt2 = conn.prepareStatement(sql_changeduser);
 			pstmt2.setTimestamp(1, Date);
-			pstmt2.setString(2, getUser());
 			pstmt2.execute();
+			
+			pstmt = conn.prepareStatement(sql_insertuser);
+			pstmt.setString(1, inputid);
+			pstmt.setTimestamp(2, Date);
+			pstmt.setTimestamp(3, null);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (attTable != null)
-				try {
-					attTable.close();
-				} catch (Exception e) {
-				}
 			if (pstmt != null)
 				try {
 					pstmt.close();
