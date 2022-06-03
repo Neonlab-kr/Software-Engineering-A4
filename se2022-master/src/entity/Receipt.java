@@ -74,10 +74,10 @@ public class Receipt {
 	
 	
 	
-	public void create_receipt(String method) {//영수증 생성 메소드
+	public Boolean create_receipt(String method) {//영수증 생성 메소드
 		receiptID = max_receiptnum() + 1;
 		String sql = "INSERT INTO `Receipt_Table` (`Receipt_Code`, `Payment_Method` , Receipt_Table.Balance ) VALUES ('" + receiptID + "', '" + method + "' , '" + balance + "' )";
-		db.executeQuery(sql);
+		ResultSet resultSet = db.executeQuery(sql);
 		for(int i =0;i<productList.size();i++) {//영수증에 구매된 아이템들을 추가,판매된 재고를 삭감
 			String purchase = "INSERT INTO `Purchased_Items_List_Table` (`Receipt_Code`, `Item_Code`, `Sales_Quantity`) VALUES ('" + receiptID + "', '" + productList.get(i).getBarcode() + " ', '" + productList.get(i).getStock() + "')";
 			String subStock = "UPDATE Item_Table set Stock = Stock - '" + productList.get(i).getStock() + "' "
@@ -85,6 +85,10 @@ public class Receipt {
 			db.executeQuery(purchase);
 			db.executeQuery(subStock);
 		}
+		if(resultSet != null)
+			return true;
+		else
+			return false;
 	}
 	
 	public Boolean updatepayment(int id) {//결제수단을 환불처리로 바꾸어 반품된 영수증을 표시한다.
