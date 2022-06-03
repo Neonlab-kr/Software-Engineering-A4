@@ -10,25 +10,15 @@ import entity.Receipt;
 public abstract class Product_Pay_Ctrl {
 	protected Receipt receipt;
 	
-	abstract public void product_pay();
+	abstract public void product_pay();//상품을 결제를 처리하는 추상메소드
 	
-	public void check_state(Boolean check) {
+	public void check_state(Boolean check) {//상태 확인후 오류메시지 출력
 		if(check) {
+			JOptionPane.showMessageDialog(null, "성공적으로 결제되었습니다.", "결재 성공", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("성공적으로 결제되었습니다.");
 		}else {
-			JOptionPane.showMessageDialog(null, "결제 에러", "금액이 부족합니다.", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "잘못된 결제입니다.", "결재 에러.", JOptionPane.ERROR_MESSAGE);
 			System.out.println("잘못된 결제입니다.");
 		}
-	}
-	public void calculator_Money() {
-		int balance =0;
-		ArrayList<Item> temp = receipt.getItems();
-		for(int i =0;i<temp.size();i++) {
-			balance += temp.get(i).getcalprice();
-		}
-		receipt.setBalance(balance);
-	}
-	public String viewbalance() {
-		return Integer.toString(receipt.getbalance());
 	}
 }

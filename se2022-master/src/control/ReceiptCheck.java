@@ -9,18 +9,17 @@ import entity.Item;
 import entity.Receipt;
 
 public class ReceiptCheck {
-	private int totalMoney;
 	private Receipt receipt;
 	
-	public String receiptSearch(int receiptID) {
+	public String receiptSearch(int receiptID) {//선택된 영수증을 양식대로 출력
 		receipt = new Receipt();
 		StringBuffer receiptString = new StringBuffer();
 		ArrayList<Item> itemlist;
+		receipt.loadReceipt(receiptID);//영수증 정보 불러오기
+		itemlist = receipt.getproductList(receiptID);//조회된 영수증의 상품들 정보 불러오기
 		receiptString.append("품명\t\t단가\t수량\t금액\r\n");
 		receiptString.append("---------------------------------------------------------");
-		receipt.loadReceipt(receiptID);
-		itemlist = receipt.getproductList(receiptID);
-		for(int i =0;i<itemlist.size();i++) {
+		for(int i =0;i<itemlist.size();i++) {//영수증에 저장된 상품정보를 양식에 맞게 추가
 			receiptString.append("\r\n");
 			receiptString.append(itemlist.get(i).getItemName());
 			receiptString.append("\t");
@@ -30,7 +29,6 @@ public class ReceiptCheck {
 			receiptString.append("\t");
 			receiptString.append(itemlist.get(i).getcalprice());
 		}
-		
 		receiptString.append("\r\n---------------------------------------------------------");
 		receiptString.append("\r\n합      계:\t\t\t\t");
 		receiptString.append(receipt.getbalance());
@@ -44,11 +42,13 @@ public class ReceiptCheck {
 		return receiptString.toString();		
 	}
 	
-	public Object[][] viewList(){
+	public Object[][] viewList(){//영수증 리스트 전체를 출력
 		receipt = new Receipt();
-		int maxnum = receipt.max_receiptnum() -1;
-		Object[][] arr = new Object[maxnum][4];
-		ResultSet receiptlist = receipt.getReceiptList();
+		if(receipt.max_receiptnum() == 0)//영수증이 존재하지 않을 경우 null
+			return null;	
+		int maxnum = receipt.max_receiptnum();//영수증 최대번호 받아오기
+		Object[][] arr = new Object[maxnum-1][4];
+		ResultSet receiptlist = receipt.getReceiptList();//영수증 리스트 받아오기
 		try {
 			int i =0;
 			while (receiptlist.next()) {
@@ -59,18 +59,18 @@ public class ReceiptCheck {
 				i++;
 			}
 		} catch (SQLException e) {
-			// TODO: handle exception
+			System.out.println("DB연결이 실패하거나, SQL문에 오류가 있습니다.");
 		}
 		return arr;
 	}
 	
-	public Object[][] view(int receiptID){
+	public Object[][] view(int receiptID){//조회한 영수증을 출력
 		receipt = new Receipt();
 		Object[][] arr;
-		receipt.loadReceipt(receiptID);
-		if(receipt.getbalance() == 0) {
+		receipt.loadReceipt(receiptID);//영수증 조회
+		if(receipt.getpaymentMethod().equals("")) {//조회되지 않을 경우 없으므로 null전달
 			arr = null;
-		}else {
+		}else {//조회된 영수증을 저장
 			arr = new Object[1][4];
 			arr[0][0] = receiptID;
 			arr[0][1] = receipt.getpurchaseDate();
