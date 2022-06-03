@@ -79,6 +79,10 @@ public class WorkTimePage {
 		
 		JButton SearchButton = new JButton("조회");
 		SearchButton.setBounds(252, 10, 77, 52);
+		SearchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		frame.getContentPane().add(SearchButton);
 		
 		DateTextField = new JTextField();
@@ -110,18 +114,6 @@ public class WorkTimePage {
 		scrollPane.setViewportView(workTable);
 		workTable.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"", "", ""},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
 			},
 			new String[] {
 				"직원이름", "출근일시", "퇴근일시"
