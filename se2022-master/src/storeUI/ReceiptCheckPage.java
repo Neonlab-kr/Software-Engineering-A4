@@ -5,26 +5,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import java.awt.BorderLayout;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import control.ReceiptCheck;
-import entity.Receipt;
 
 import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
-import javax.swing.JScrollBar;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
@@ -41,7 +35,7 @@ public class ReceiptCheckPage {
 	private JScrollPane receipt_scroll;
 	private JScrollPane receipt_table_scroll;
 	private JTable receipt_table;
-	private boolean backCheck = false;
+	private boolean backCheck = false; //현제 리스트화면인지 조회화면인지 판단
 	private DefaultTableCellRenderer celAlign = new DefaultTableCellRenderer();
 	private DefaultTableCellRenderer celRight = new DefaultTableCellRenderer();
 	private ReceiptCheck receiptCheck = new ReceiptCheck();
@@ -132,40 +126,40 @@ public class ReceiptCheckPage {
 		receipt_table_scroll.setViewportView(receipt_table);
 		setTable(receiptCheck.viewList());
 
-		receipt_table.addMouseListener(new MouseAdapter() {
-			@Override
+		receipt_table.addMouseListener(new MouseAdapter() {//해당 영수증 클릭시 영수증 세부내역 보여줌
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
 					int row = receipt_table.getSelectedRow();
 					receipt_table_scroll.setVisible(false);
-					receipt.setText(receiptCheck.receiptSearch(row+1));
+					receipt.setText(receiptCheck.receiptSearch(row+1));//영수증 세부내용 가져오기
 					receipt_scroll.setVisible(true);
-					backCheck = true;
+					backCheck = true;//조회상태 전환
 				}
 			}
 		});
-		backbtn.addActionListener(new ActionListener() {
+		backbtn.addActionListener(new ActionListener() {//뒤로가기 버튼클릭시 이벤트
 			public void actionPerformed(ActionEvent e) {
-				if(!backCheck) {
+				if(!backCheck) {//조회상태일시 리스트화면으로 이동
 					Main_UI mp = new Main_UI();
 					mp.setVisible(true);
 					frame.dispose();
-				}else {
+				}else {//리스트 화면일시 메인화면으로 이동
 					receipt_table_scroll.setVisible(true);
 					receipt_scroll.setVisible(false);
 					backCheck = false;
 				}
 			}
 		});
-		Checkbtn.addActionListener(new ActionListener() {
+		Checkbtn.addActionListener(new ActionListener() {//조회버튼 클릭시 이벤트
 			public void actionPerformed(ActionEvent e) {
 				String str = receiptNum.getText();
-				if(str.equals("")) {
+				if(str.equals("")) {//아무것도 입력하지 않고 조회시 전체 리스트 출력
 					setTable(receiptCheck.viewList());
 				}else {
-					if(str.chars().allMatch(Character::isDigit)) {
+					if(str.chars().allMatch(Character::isDigit)) {//영수증 번호가 숫자일 경우만 조회 출력
 						setTable(receiptCheck.view(Integer.parseInt(str)));
-					}else{
+					}else{//오류메시지 출력
+						JOptionPane.showMessageDialog(null, "숫자가 아닌 잘못된 문자가 입력되었습니다.", "영수증 번호 오류", JOptionPane.ERROR_MESSAGE);
 						System.out.println("숫자가 아닌 잘못된 문자가 입력되었습니다.");
 					}
 				}
@@ -174,7 +168,7 @@ public class ReceiptCheckPage {
 		});
 	}
 	
-	public void setTable(Object[][] temp) {
+	public void setTable(Object[][] temp) {//영수증 리스트를 설정
 		receipt_table.setModel(new DefaultTableModel(
 				temp,
 				new String[] {

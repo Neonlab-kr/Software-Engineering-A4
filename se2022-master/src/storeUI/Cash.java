@@ -1,20 +1,16 @@
 package storeUI;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextPane;
-
 import control.Pay_Cash;
 import entity.Item;
-
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -26,8 +22,9 @@ public class Cash {
 	private JTextField receive_money;
 	private JTextField received_money;
 	private JTextField div_money;
-	private JButton calculator_button;
 	private Pay_Cash cash;
+	private JButton backbtn;
+	private Product_Sell_UI sell_UI;
 	/**
 	 * Launch the application.
 	 */
@@ -51,9 +48,12 @@ public class Cash {
 		initialize();
 	}
 	
-	public Cash(ArrayList<Item> items) {
-		cash = new Pay_Cash(items);
+	public Cash(ArrayList<Item> items ,String totalmoney , Product_Sell_UI sell_UI) {
+		int total = Integer.parseInt(totalmoney);
+		cash = new Pay_Cash(items,total);
+		this.sell_UI = sell_UI;//해당 변수로 상품판매 화면을 제어
 		initialize();
+		receive_money.setText(totalmoney);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class Cash {
 		frame = new JFrame();
 		frame.setEnabled(true);
 		frame.setTitle("현금결제");
-		frame.setBounds(100, 100, 442, 140);
+		frame.setBounds(100, 100, 335, 140);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -93,14 +93,13 @@ public class Cash {
 		receive_money = new JTextField();
 		receive_money.setBounds(83, 10, 116, 21);
 		receive_money.setEditable(false);
-		receive_money.setText(cash.viewbalance());
 		panel.add(receive_money);
 		receive_money.setColumns(10);
 		
 		received_money = new JTextField();
 		received_money.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){//받은금액을 입력후 엔터를 치면 잔돈을 계산해준다.
 					div_money.setText(cash.moneyChanges(received_money.getText()));
 	            }
 			}
@@ -125,30 +124,27 @@ public class Cash {
 		JButton calculator_button = new JButton("금액계산");
 		calculator_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(div_money.getText().equals(""))
+				if(div_money.getText().equals(""))//금액을 받지않은 경우 동작하지않음
 					return;
-				if(Integer.parseInt(div_money.getText()) >= 0) {
-					cash.product_pay();
-					Product_Sell_UI gsframe = new Product_Sell_UI();
-					gsframe.setVisible(true);
+				if(Integer.parseInt(div_money.getText()) >= 0) {//잔돈이 0원이상일 경우 결제진행
+					cash.product_pay();//결제처리
+					sell_UI.table_clear();//장바구니 초기화
 					frame.dispose();
 				}
-				
 			}
 		});
-		calculator_button.setBounds(211, 10, 97, 80);
+		calculator_button.setBounds(211, 40, 98, 50);
 		panel.add(calculator_button);
 		
-		JButton backbtn = new JButton("뒤로가기");
+		JButton backbtn = new JButton("뒤로가기");//다시 메인화면으로 돌아간다.
 		backbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Product_Sell_UI gsframe = new Product_Sell_UI();
-				gsframe.setVisible(true);
 				frame.dispose();
 			}
 		});
-		backbtn.setBounds(323, 10, 97, 80);
+		backbtn.setBounds(211, 10, 98, 20);
 		panel.add(backbtn);
+		
 	}
 	
 	public void setVisible(boolean b) {
