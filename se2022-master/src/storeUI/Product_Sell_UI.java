@@ -167,10 +167,10 @@ public class Product_Sell_UI {
 				if(str.equals("")) {//입력된 값이 없으면 동작하지 않는다.
 					return;
 				}
+				checkReturn = true;//반품 진행중으로 상태전환(부가기능들을 못쓰도록 제어)
 				setTable(return_Ctrl.product_receiptSearch(str));
 				all_money.setText(return_Ctrl.Calculator_totalMoney());
 				receipt_text.setText("");
-				checkReturn = true;//반품 진행중으로 상태전환(부가기능들을 못쓰도록 제어)
 			}
 		});
 		scan_receipt.setBounds(12, 275, 161, 37);
@@ -231,19 +231,35 @@ public class Product_Sell_UI {
 	}
 	
 	public void setTable(Object[][] temp){
-		product_list.setModel(new DefaultTableModel(
-				temp,
-				new String[] {
-					"상품명", "수량", "금액"
-				}
-			) {
-				boolean[] columnEditables = new boolean[] {
-					false, true, false
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
+		if(checkReturn) {
+			product_list.setModel(new DefaultTableModel(
+					temp,
+					new String[] {
+						"상품명", "수량", "금액"
+					}
+				) {
+					boolean[] columnEditables = new boolean[] {
+						false, false, false
+					};
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
+		}else {
+			product_list.setModel(new DefaultTableModel(
+					temp,
+					new String[] {
+						"상품명", "수량", "금액"
+					}
+				) {
+					boolean[] columnEditables = new boolean[] {
+						false, true, false
+					};
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
+		}
 		product_list.getColumn("상품명").setPreferredWidth(70);
 		product_list.getColumn("상품명").setCellRenderer(celAlign);
 		
