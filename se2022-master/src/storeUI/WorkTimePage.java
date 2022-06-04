@@ -11,10 +11,12 @@ import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
+import java.text.ParseException;
 
 public class WorkTimePage {
 
@@ -81,6 +83,19 @@ public class WorkTimePage {
 		SearchButton.setBounds(252, 10, 77, 52);
 		SearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				WorkTimePage workframe = new WorkTimePage();
+				if (DateTextField != null) {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+					try {
+						formatter.parse(DateTextField.getText());
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				else if (nameTextField != null) {
+				}
+				
 			}
 		});
 		frame.getContentPane().add(SearchButton);
