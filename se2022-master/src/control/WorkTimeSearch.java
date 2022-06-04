@@ -15,10 +15,11 @@ public class WorkTimeSearch {
 	private int[] Result;
 
 	public Object[][] getInfo(String name){
-		ResultSet rs = db.executeQuery("");
+		ResultSet rs = db.executeQuery("SELECT * FROM Attendance_Table WHERE Attendance_Table.Employee_ID = " + name);
 		return userData;
 	}
 	public Object[][] getInfo(Date date) {
 		return userData;
 	}
+	
 }

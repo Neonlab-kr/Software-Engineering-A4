@@ -3,8 +3,12 @@ package storeUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import control.WorkTimeSearch;
+
 import javax.swing.JTextPane;
 import java.awt.Color;
 import javax.swing.UIManager;
@@ -83,19 +87,28 @@ public class WorkTimePage {
 		SearchButton.setBounds(252, 10, 77, 52);
 		SearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WorkTimePage workframe = new WorkTimePage();
-				if (DateTextField != null) {
+				WorkTimeSearch search = new WorkTimeSearch();
+				Object[][] table;
+				if (DateTextField.getText() != null) {
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 					try {
-						formatter.parse(DateTextField.getText());
+						table = search.getInfo(formatter.parse(DateTextField.getText()));
+						setTable(table);
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "올바른 형식이 아닙니다(ex.20220504)).","타입 에러", JOptionPane.PLAIN_MESSAGE);
 						e1.printStackTrace();
 					}
 				}
-				else if (nameTextField != null) {
+				else if (nameTextField.getText() != null) {
+					table = search.getInfo(nameTextField.getText());
+					setTable(table);
 				}
-				
+				else if ((nameTextField.getText() != null) && (DateTextField.getText() != null)) {
+					JOptionPane.showMessageDialog(null, "한 가지 값만 입력해주세요.","입력 에러", JOptionPane.PLAIN_MESSAGE);
+				}
+				else
+					JOptionPane.showMessageDialog(null, "값을 입력하지 않았습니다. ","입력 에러", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		frame.getContentPane().add(SearchButton);
@@ -150,5 +163,21 @@ public class WorkTimePage {
 
 	public void dispose() {
 		frame.dispose();
+	}
+	
+	public void setTable(Object[][] table) {
+		workTable.setModel(new DefaultTableModel(
+				table,
+				new String[] {
+					"직원이름", "출근일시", "퇴근일시"
+				}
+			) {
+				boolean[] columnEditables = new boolean[] {
+					false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
 	}
 }
