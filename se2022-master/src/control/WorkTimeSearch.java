@@ -17,7 +17,7 @@ public class WorkTimeSearch {
 		int j = 0;
 		try {
 			rs.last();
-			rowcnt = rs.getRow()-1;
+			rowcnt = rs.getRow();
 			rs.beforeFirst();
 			userData = new Object[rowcnt][3];
 			while (rs.next()) {
