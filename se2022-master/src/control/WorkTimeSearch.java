@@ -18,7 +18,7 @@ public class WorkTimeSearch {
 		try {
 			rs.last();
 			rowcnt = rs.getRow()-1;
-			rs.first();
+			rs.beforeFirst();
 			userData = new Object[rowcnt][3];
 			while (rs.next()) {
 				userData[j][0] = rs.getString("Employee_ID");
