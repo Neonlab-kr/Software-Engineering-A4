@@ -31,7 +31,9 @@ public class WorkTimePage {
 	private JButton backbtn;
 	private JPanel infoPanel;
 	private JScrollPane scrollPane;
-
+	private SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+	private String date;
+	private String name;
 	/**
 	 * Launch the application.
 	 */
@@ -42,6 +44,7 @@ public class WorkTimePage {
 					WorkTimePage window = new WorkTimePage();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
+					System.out.println("여기서 오류");
 					e.printStackTrace();
 				}
 			}
@@ -83,16 +86,17 @@ public class WorkTimePage {
 		frame.getContentPane().add(nameTextField);
 		nameTextField.setColumns(10);
 		
+		WorkTimeSearch search = new WorkTimeSearch();
 		JButton SearchButton = new JButton("조회");
 		SearchButton.setBounds(252, 10, 77, 52);
 		SearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WorkTimeSearch search = new WorkTimeSearch();
 				Object[][] table;
-				if (DateTextField.getText() != null) {
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+				date = DateTextField.getText();
+				name = nameTextField.getText();
+				if (!date.equals("")) {
 					try {
-						table = search.getInfo(formatter.parse(DateTextField.getText()));
+						table = search.getInfo(formatter.parse(date));
 						setTable(table);
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
@@ -100,11 +104,11 @@ public class WorkTimePage {
 						e1.printStackTrace();
 					}
 				}
-				else if (nameTextField.getText() != null) {
-					table = search.getInfo(nameTextField.getText());
+				else if (!name.equals("")) {
+					table = search.getInfo(name);
 					setTable(table);
 				}
-				else if ((nameTextField.getText() != null) && (DateTextField.getText() != null)) {
+				else if (!name.equals("") && !date.equals("")) {
 					JOptionPane.showMessageDialog(null, "한 가지 값만 입력해주세요.","입력 에러", JOptionPane.PLAIN_MESSAGE);
 				}
 				else
