@@ -2,16 +2,14 @@ package storeUI;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.Color;
-import javax.swing.JTextPane;
 
 import control.ItemControl;
-
-import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class AddItemUI {
@@ -21,8 +19,8 @@ public class AddItemUI {
 	public JTextField itemName;
 	public JTextField price;
 	public JTextField stock;
-	
-	private AddItemUI This=this;
+
+	private AddItemUI This = this;
 
 	/**
 	 * Launch the application.
@@ -132,8 +130,22 @@ public class AddItemUI {
 		JButton uploadExcelButton = new JButton("엑셀 업로드");
 		uploadExcelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.setFileFilter(new FileNameExtensionFilter("XLS & XLSX Images", "xls", "xlsx"));
+				chooser.setMultiSelectionEnabled(false);
+				chooser.setCurrentDirectory(new File("C:\\"));
+
+				int ret = chooser.showOpenDialog(null);
+				if (ret != JFileChooser.APPROVE_OPTION) {
+					JOptionPane.showMessageDialog(null, "파일을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+				String filePath = chooser.getSelectedFile().getPath();
+
 				ItemControl itemControl = new ItemControl();
-				itemControl.AddExcel();
+				itemControl.AddExcel(filePath);
 			}
 		});
 		uploadExcelButton.setBounds(195, 41, 97, 23);

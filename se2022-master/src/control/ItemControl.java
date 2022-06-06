@@ -1,5 +1,9 @@
 package control;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +18,16 @@ import entity.Item;
 import storeUI.AddItemUI;
 import storeUI.ImportItemUI;
 import storeUI.ItemInfoUI;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ItemControl {
 	dbConnector dbConn = new dbConnector();
@@ -49,8 +63,7 @@ public class ItemControl {
 			}
 			ui.goodsCode.setText("");
 			ui.goodsName.setText("");
-		}
-		else {
+		} else {
 			ui.goodsCode.setText("");
 			ui.goodsName.setText("");
 		}
@@ -98,7 +111,72 @@ public class ItemControl {
 		JOptionPane.showMessageDialog(null, "상품입고가 완료되었습니다", "입고 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public void AddExcel() {
+	public void AddExcel(String filePath) {
+		try {
+			Connection tmpConn = dbConn.getConnection();
+			PreparedStatement pre=tmpConn
+					.prepareStatement("insert into Item_Table(Item_Code,Item_Name,Item_Price,Stock) VALUES(?,?,?,?);");;
+			
+			Workbook workbook = null;
+			File file = new File(filePath);
+			FileInputStream fileInputStream = new FileInputStream(file);
+			if (file.getAbsolutePath().endsWith("xlsx")) {
+				workbook = new XSSFWorkbook(fileInputStream);
+			} else if (file.getAbsolutePath().endsWith("xls")) {
+				workbook = new HSSFWorkbook(fileInputStream);
+			}
+
+			int rowindex = 0;
+			int columnindex = 0;
+			// 시트 수 (첫번째에만 존재하므로 0을 준다)
+			// 만약 각 시트를 읽기위해서는 FOR문을 한번더 돌려준다
+			Sheet sheet = workbook.getSheetAt(0);
+			// 행의 수
+			int rows = sheet.getPhysicalNumberOfRows();
+			for (rowindex = 1; rowindex < rows; rowindex++) {
+				// 행을읽는다
+				Row row = sheet.getRow(rowindex);
+				if (row != null) {
+					// 셀의 수
+					int cells = row.getPhysicalNumberOfCells();
+					for (columnindex = 0; columnindex <= cells; columnindex++) {
+						// 셀값을 읽는다
+						Cell cell = row.getCell(columnindex);
+						String value = "";
+						// 셀이 빈값일경우를 위한 널체크
+						if (cell == null) {
+							continue;
+						} else {
+							// 타입별로 내용 읽기
+							switch (cell.getCellType()) {
+							case FORMULA:
+								value = cell.getCellFormula();
+								break;
+							case NUMERIC:
+								value = cell.getNumericCellValue() + "";
+								break;
+							case STRING:
+								value = cell.getStringCellValue() + "";
+								break;
+							case BLANK:
+								value = cell.getBooleanCellValue() + "";
+								break;
+							case ERROR:
+								value = cell.getErrorCellValue() + "";
+								break;
+							}
+						}
+						System.out.println(rowindex + "번 행 : " + columnindex + "번 열 값은: " + value);
+						pre.setString(columnindex, value);
+					}
+				}
+				pre.executeUpdate();
+			}
+
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "상품일괄등록에 실패하였습니다", "등록 실패", JOptionPane.ERROR_MESSAGE);
+		}
 		JOptionPane.showMessageDialog(null, "상품일괄등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
