@@ -12,12 +12,12 @@ public class WorkTimeSearch {
 	private Object[][] userData;
 	
 	public Object[][] getInfo(String name) {
-		ResultSet rs = db.executeQuery("SELECT * FROM Attendance_Table WHERE Employee_ID=" + name + " and End_Timestamp IS NOT NULL");
+		ResultSet rs = db.executeQuery("SELECT Employee_ID, Start_Timestamp, End_Timestamp FROM Attendance_Table WHERE Employee_ID=\'" + name + "\' and End_Timestamp IS NOT NULL");
 		int rowcnt = 0;
 		int j = 0;
 		try {
 			rs.last();
-			rowcnt = rs.getRow();
+			rowcnt = rs.getRow()-1;
 			rs.first();
 			userData = new Object[rowcnt][3];
 			while (rs.next()) {
