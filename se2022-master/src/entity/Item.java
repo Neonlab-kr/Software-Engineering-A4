@@ -36,8 +36,8 @@ public class Item {
 		String sql = "SELECT Item_Name , Item_Price, Stock FROM Item_Table WHERE Item_Code = '" + barcode + "';";
 		try {
 			ResultSet rs = db.executeQuery(sql);
-			if(rs == null) {
-				return;
+			if(!rs.isBeforeFirst()) {
+				JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
 			}
 			while(rs.next()) {
 				this.itemName = rs.getString(1);

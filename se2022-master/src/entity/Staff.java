@@ -31,8 +31,8 @@ public class Staff {
 		String sql = "SELECT Employee_ID , Employee_Name, Employee_Phone FROM Employee_Table WHERE Employee_ID = '" + id + "';";
 		try {
 			ResultSet rs = db.executeQuery(sql);
-			if(rs == null) {
-				return;
+			if(!rs.isBeforeFirst()) {
+				JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
 			}
 			while(rs.next()) {
 				this.id = rs.getString(1);
@@ -44,9 +44,28 @@ public class Staff {
 		}
 	}
 	
-	public List<Staff> getStaffListDB(String name){
+	public List<Staff> getStaffListByNameDB(String name){
 		List<Staff> staffList = new ArrayList<Staff>();
 		String sql = "SELECT Employee_ID, Employee_Name, Employee_Phone FROM Employee_Table WHERE Employee_Name like \"%" + name + "%\";";
+		ResultSet src = db.executeQuery(sql);
+		try {
+			if (!src.isBeforeFirst()) {
+				JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
+			} else {
+				while(src.next()) {
+					staffList.add(new Staff(src.getString(1),src.getString(2),src.getString(3)));
+				}	
+			}
+		} catch (HeadlessException | NumberFormatException | SQLException e) {
+			e.printStackTrace();
+		}
+		JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
+		return staffList;
+	}
+	
+	public List<Staff> getStaffListByPhoneDB(String phone){
+		List<Staff> staffList = new ArrayList<Staff>();
+		String sql = "SELECT Employee_ID, Employee_Name, Employee_Phone FROM Employee_Table WHERE Employee_Phone like \"%" + phone + "%\";";
 		ResultSet src = db.executeQuery(sql);
 		try {
 			if (!src.isBeforeFirst()) {
