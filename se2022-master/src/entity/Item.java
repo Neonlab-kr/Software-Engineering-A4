@@ -35,14 +35,14 @@ public class Item {
 		this.barcode = itemID;
 		String sql = "SELECT Item_Name , Item_Price, Stock FROM Item_Table WHERE Item_Code = '" + barcode + "';";
 		try {
-			ResultSet receipt = db.executeQuery(sql);
-			if(receipt == null) {
+			ResultSet rs = db.executeQuery(sql);
+			if(rs == null) {
 				return;
 			}
-			while(receipt.next()) {
-				this.itemName = receipt.getString(1);
-				this.price = receipt.getInt(2);
-				this.stock =receipt.getInt(3);
+			while(rs.next()) {
+				this.itemName = rs.getString(1);
+				this.price = rs.getInt(2);
+				this.stock =rs.getInt(3);
 			}
 		} catch (SQLException e) {
 			System.out.println("DB연결이 실패하거나, SQL문에 오류가 있습니다.");

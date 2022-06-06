@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import java.awt.BorderLayout;
 import javax.swing.table.DefaultTableModel;
+
+import control.StaffControl;
+
 import javax.swing.JTextPane;
 import java.awt.Color;
 import javax.swing.UIManager;
@@ -39,6 +42,8 @@ public class StaffSearchPage {
 	private JTextField idTextField;
 	private JButton AmendButton;
 	private JButton DeleteButton;
+	
+	private StaffSearchPage This = this;
 
 	/**
 	 * Launch the application.
@@ -79,6 +84,18 @@ public class StaffSearchPage {
 		SearchTextField.setColumns(10);
 		
 		JButton SearchButton = new JButton("조회");
+		SearchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(SearchOptionSel.getSelectedItem().toString().equals("ID")) {
+					StaffControl staffControl = new StaffControl();
+					staffControl.StaffSearch(This);
+				}
+				else {
+					StaffControl staffControl = new StaffControl();
+					staffControl.StaffListSearch(This);
+				}
+			}
+		});
 		SearchButton.setBounds(278, 10, 75, 23);
 		frame.getContentPane().add(SearchButton);
 		
@@ -103,36 +120,7 @@ public class StaffSearchPage {
 		
 		StaffTable = new JTable();
 		scrollPane.setViewportView(StaffTable);
-		StaffTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"", "", ""},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"ID", "이름", "전화번호"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		StaffTable.setModel(new DefaultTableModel(new Object[][] { },new String[] {"ID", "\uC774\uB984", "\uC804\uD654\uBC88\uD638"}));
 		StaffTable.getColumnModel().getColumn(0).setPreferredWidth(40);
 		StaffTable.getColumnModel().getColumn(1).setPreferredWidth(15);
 		

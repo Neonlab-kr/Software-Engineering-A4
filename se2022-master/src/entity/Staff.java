@@ -28,7 +28,20 @@ public class Staff {
 	}
 	
 	public void getStaffDB(String id) {
-		
+		String sql = "SELECT Employee_ID , Employee_Name, Employee_Phone FROM Employee_Table WHERE Employee_ID = '" + id + "';";
+		try {
+			ResultSet rs = db.executeQuery(sql);
+			if(rs == null) {
+				return;
+			}
+			while(rs.next()) {
+				this.id = rs.getString(1);
+				this.name = rs.getString(2);
+				this.phone =rs.getString(3);
+			}
+		} catch (SQLException e) {
+			System.out.println("DB연결이 실패하거나, SQL문에 오류가 있습니다.");
+		}
 	}
 	
 	public List<Staff> getStaffListDB(String name){
