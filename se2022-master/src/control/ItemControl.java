@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import SQL.dbConnector;
@@ -31,44 +32,59 @@ public class ItemControl {
 			item.getItemDB(ui.goodsCode.getText());
 
 			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
+			model.setNumRows(0);
 			model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
 					Integer.toString(item.getStock()) });
+			ui.goodsCode.setText("");
+			ui.goodsName.setText("");
 		} else if (!ui.goodsName.getText().equals("")) {
 			List<Item> itemList = new Item().getItemListDB(ui.goodsName.getText());
 			Iterator<Item> it = itemList.iterator();
 			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
+			model.setNumRows(0);
 			while (it.hasNext()) {
 				Item item = (Item) it.next();
 				model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
 						Integer.toString(item.getStock()) });
 			}
+			ui.goodsCode.setText("");
+			ui.goodsName.setText("");
 		}
+		else {
+			ui.goodsCode.setText("");
+			ui.goodsName.setText("");
+		}
+		JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void DeleteItem(ItemInfoUI ui) {
 		dbConn.getConnection();
 		int row = ui.goodsTable.getSelectedRow();
-		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(row,1) + ";";
+		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(row, 1) + ";";
 		dbConn.executeQuery(sql);
+		JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다", "삭제 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void ModifyItem(ItemInfoUI ui) {
 		Connection tmpConn = dbConn.getConnection();
-		int row = ui.goodsTable.getSelectedRow();
 		PreparedStatement pre;
-		try {
-			pre = tmpConn
-					.prepareStatement("update Item_Table set Item_Name=?, Item_Price=?, Stock=?  WHERE Item_Code = ?;");
-			pre.setString(1, (String) ui.goodsTable.getValueAt(row, 1));
-			pre.setString(2, (String) ui.goodsTable.getValueAt(row, 2));
-			pre.setString(3, (String) ui.goodsTable.getValueAt(row, 3));
-			pre.setString(4, (String) ui.goodsTable.getValueAt(row, 0));
-		} catch (SQLException e) {
-			e.printStackTrace();
+		for (int row = 0; row < ui.goodsTable.getRowCount(); row++) {
+			try {
+				pre = tmpConn.prepareStatement(
+						"update Item_Table set Item_Name=?, Item_Price=?, Stock=?  WHERE Item_Code = ?;");
+				pre.setString(1, (String) ui.goodsTable.getValueAt(row, 1));
+				pre.setString(2, (String) ui.goodsTable.getValueAt(row, 2));
+				pre.setString(3, (String) ui.goodsTable.getValueAt(row, 3));
+				pre.setString(4, (String) ui.goodsTable.getValueAt(row, 0));
+				pre.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		JOptionPane.showMessageDialog(null, "수정이 완료되었습니다", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public boolean ImportItem(ImportItemUI ui) {
+	public void ImportItem(ImportItemUI ui) {
 		Connection tmpConn = dbConn.getConnection();
 		PreparedStatement pre;
 		try {
@@ -77,16 +93,16 @@ public class ItemControl {
 			pre.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			JOptionPane.showMessageDialog(null, "상품입고에 실패하였습니다", "입고 실패", JOptionPane.ERROR_MESSAGE);
 		}
-		return true;
+		JOptionPane.showMessageDialog(null, "상품입고가 완료되었습니다", "입고 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public boolean AddExcel() {
-		return true;
+	public void AddExcel() {
+		JOptionPane.showMessageDialog(null, "상품일괄등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public boolean AddItem(AddItemUI ui) {
+	public void AddItem(AddItemUI ui) {
 		Connection tmpConn = dbConn.getConnection();
 		PreparedStatement pre;
 		try {
@@ -99,8 +115,8 @@ public class ItemControl {
 			pre.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			JOptionPane.showMessageDialog(null, "상품등록에 실패하였습니다", "등록 실패", JOptionPane.ERROR_MESSAGE);
 		}
-		return true;
+		JOptionPane.showMessageDialog(null, "상품등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

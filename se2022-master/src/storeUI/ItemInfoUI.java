@@ -56,7 +56,7 @@ public class ItemInfoUI {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("상품정보");
-		frame.setBounds(100, 100, 440, 241);
+		frame.setBounds(100, 100, 454, 439);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -98,20 +98,12 @@ public class ItemInfoUI {
 		String contents[][] = { };
 		
 		JScrollPane TableScrollPane = new JScrollPane();
-		TableScrollPane.setBounds(12, 87, 410, 46);
+		TableScrollPane.setBounds(12, 87, 410, 236);
 		frame.getContentPane().add(TableScrollPane);
 		
 				goodsTable = new JTable();
-				goodsTable.setEnabled(false);
 				TableScrollPane.setViewportView(goodsTable);
-				goodsTable.setCellSelectionEnabled(true);
-				goodsTable.setModel(new DefaultTableModel(contents,header) {
-					boolean[] columnEditables = new boolean[] { false, false, false, false };
-
-					public boolean isCellEditable(int row, int column) {
-						return columnEditables[column];
-					}
-				});
+				goodsTable.setModel(new DefaultTableModel(contents,header));
 				goodsTable.getColumnModel().getColumn(0).setPreferredWidth(130);
 				goodsTable.getColumnModel().getColumn(0).setMinWidth(25);
 				goodsTable.getColumnModel().getColumn(1).setPreferredWidth(140);
@@ -128,7 +120,7 @@ public class ItemInfoUI {
 				itemControl.ModifyItem(This);
 			}
 		});
-		modifybtn.setBounds(12, 143, 130, 52);
+		modifybtn.setBounds(12, 333, 130, 52);
 		frame.getContentPane().add(modifybtn);
 
 		JButton deletebtn = new JButton("\uC0AD\uC81C");
@@ -138,7 +130,7 @@ public class ItemInfoUI {
 				itemControl.DeleteItem(This);
 			}
 		});
-		deletebtn.setBounds(154, 143, 130, 52);
+		deletebtn.setBounds(154, 333, 130, 52);
 		frame.getContentPane().add(deletebtn);
 
 		JButton backbtn = new JButton("\uD655\uC778");
@@ -149,7 +141,7 @@ public class ItemInfoUI {
 				frame.dispose();
 			}
 		});
-		backbtn.setBounds(296, 143, 126, 52);
+		backbtn.setBounds(296, 333, 126, 52);
 		frame.getContentPane().add(backbtn);
 	}
 
