@@ -52,24 +52,13 @@ public class AddItemUI {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("상품등록");
-		frame.setBounds(100, 100, 340, 230);
+		frame.setBounds(100, 100, 359, 249);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JButton backButton = new JButton("뒤로가기");
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Main_UI mp = new Main_UI();
-				mp.setVisible(true);
-				frame.dispose();
-			}
-		});
-		backButton.setBounds(207, 10, 97, 23);
-		frame.getContentPane().add(backButton);
-
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(12, 43, 302, 136);
+		panel.setBounds(12, 43, 328, 162);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -124,7 +113,7 @@ public class AddItemUI {
 				itemControl.AddItem(This);
 			}
 		});
-		submitButton.setBounds(195, 10, 97, 23);
+		submitButton.setBounds(195, 10, 116, 23);
 		panel.add(submitButton);
 
 		JButton uploadExcelButton = new JButton("엑셀 업로드");
@@ -132,7 +121,7 @@ public class AddItemUI {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				chooser.setFileFilter(new FileNameExtensionFilter("XLS & XLSX Images", "xls", "xlsx"));
+				chooser.setFileFilter(new FileNameExtensionFilter("XLS & XLSX file", "xls", "xlsx"));
 				chooser.setMultiSelectionEnabled(false);
 				chooser.setCurrentDirectory(new File("C:\\"));
 
@@ -148,8 +137,19 @@ public class AddItemUI {
 				itemControl.AddExcel(filePath);
 			}
 		});
-		uploadExcelButton.setBounds(195, 41, 97, 23);
+		uploadExcelButton.setBounds(195, 41, 116, 23);
 		panel.add(uploadExcelButton);
+		
+				JButton backButton = new JButton("뒤로가기");
+				backButton.setBounds(207, 10, 116, 23);
+				frame.getContentPane().add(backButton);
+				backButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Main_UI mp = new Main_UI();
+						mp.setVisible(true);
+						frame.dispose();
+					}
+				});
 	}
 
 	public void setVisible(boolean b) {

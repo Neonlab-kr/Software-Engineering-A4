@@ -73,8 +73,9 @@ public class ItemControl {
 	public void DeleteItem(ItemInfoUI ui) {
 		dbConn.getConnection();
 		int row = ui.goodsTable.getSelectedRow();
-		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(row, 1) + ";";
+		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(row, 0) + ";";
 		dbConn.executeQuery(sql);
+		((DefaultTableModel)ui.goodsTable.getModel()).removeRow(row);
 		JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다", "삭제 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
@@ -90,11 +91,12 @@ public class ItemControl {
 				pre.setString(3, (String) ui.goodsTable.getValueAt(row, 3));
 				pre.setString(4, (String) ui.goodsTable.getValueAt(row, 0));
 				pre.executeUpdate();
+				JOptionPane.showMessageDialog(null, "수정이 완료되었습니다", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 			} catch (SQLException e) {
 				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "수정이 실패하였습니다", "수정 실패", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		JOptionPane.showMessageDialog(null, "수정이 완료되었습니다", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void ImportItem(ImportItemUI ui) {
@@ -104,11 +106,17 @@ public class ItemControl {
 			pre = tmpConn.prepareStatement("update Item_Table set Stock = Stock + " + ui.recNum.getText()
 					+ " where Item_Code=\"" + ui.barcode.getText() + "\";");
 			pre.executeUpdate();
+			JOptionPane.showMessageDialog(null, "상품입고가 완료되었습니다", "입고 완료", JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "상품입고에 실패하였습니다", "입고 실패", JOptionPane.ERROR_MESSAGE);
+		} finally {
+			ui.barcode.setText("");
+			ui.goodsName.setText("");
+			ui.goodsNum.setText("");
+			ui.price.setText("");
+			ui.recNum.setText("");
 		}
-		JOptionPane.showMessageDialog(null, "상품입고가 완료되었습니다", "입고 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void AddExcel(String filePath) {
@@ -147,7 +155,6 @@ public class ItemControl {
 						if (cell == null) {
 							continue;
 						} else {
-							// 타입별로 내용 읽기
 							switch (cell.getCellType()) {
 							case FORMULA:
 								value = cell.getCellFormula();
@@ -166,18 +173,16 @@ public class ItemControl {
 								break;
 							}
 						}
-						System.out.println(rowindex + "번 행 : " + columnindex + "번 열 값은: " + value);
-						pre.setString(columnindex, value);
+						pre.setString(columnindex+1, value);
 					}
 				}
 				pre.executeUpdate();
 			}
-
+			JOptionPane.showMessageDialog(null, "상품일괄등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "상품일괄등록에 실패하였습니다", "등록 실패", JOptionPane.ERROR_MESSAGE);
 		}
-		JOptionPane.showMessageDialog(null, "상품일괄등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void AddItem(AddItemUI ui) {
@@ -191,10 +196,10 @@ public class ItemControl {
 			pre.setString(3, ui.price.getText());
 			pre.setString(4, ui.stock.getText());
 			pre.executeUpdate();
+			JOptionPane.showMessageDialog(null, "상품등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "상품등록에 실패하였습니다", "등록 실패", JOptionPane.ERROR_MESSAGE);
 		}
-		JOptionPane.showMessageDialog(null, "상품등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
