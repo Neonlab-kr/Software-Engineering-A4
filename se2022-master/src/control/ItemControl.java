@@ -3,11 +3,15 @@ package control;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.*;
+
+import javax.swing.table.DefaultTableModel;
 
 import SQL.dbConnector;
 import entity.Item;
 import storeUI.AddItemUI;
 import storeUI.ImportItemUI;
+import storeUI.ItemInfoUI;
 
 public class ItemControl {
 	dbConnector dbConn = new dbConnector();
@@ -18,6 +22,33 @@ public class ItemControl {
 		ui.goodsName.setText(item.getItemName());
 		ui.price.setText(Integer.toString(item.getPrice()));
 		ui.goodsNum.setText(Integer.toString(item.getStock()));//ui의 정보 갱신
+	}
+	
+	public void SearchItem(ItemInfoUI ui) {
+		if(ui.goodsCode.getText() != null) {
+			Item item = new Item();
+			item.getItemDB(ui.goodsCode.getText());
+			
+			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
+			model.addRow(new Object[] {item.getBarcode(),item.getItemName(),Integer.toString(item.getPrice()), Integer.toString(item.getStock())});
+		}
+		else if(ui.goodsName.getText() != null) {
+			List<Item> itemList = new Item().getItemListDB(ui.goodsName.getText());
+			Iterator it = itemList.iterator();
+			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
+			while(it.hasNext()) {
+				Item item = (Item) it.next();
+				model.addRow(new Object[] {item.getBarcode(),item.getItemName(),Integer.toString(item.getPrice()), Integer.toString(item.getStock())});
+			}
+		}
+	}
+	
+	public void DeleteItem(ItemInfoUI ui) {
+		
+	}
+	
+	public void ModifyItem(ItemInfoUI ui) {
+		
 	}
 
 	public boolean ImportItem(ImportItemUI ui) {

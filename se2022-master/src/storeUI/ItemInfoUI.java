@@ -16,9 +16,9 @@ import java.awt.event.ActionEvent;
 public class ItemInfoUI {
 
 	private JFrame frame;
-	private JTextField goodsCode;
-	private JTextField goodsName;
-	private JTable goodsTable;
+	public JTextField goodsCode;
+	public JTextField goodsName;
+	public JTable goodsTable;
 
 	/**
 	 * Launch the application.
