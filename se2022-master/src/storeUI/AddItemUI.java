@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextPane;
+
+import control.ItemControl;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,6 +21,8 @@ public class AddItemUI {
 	public JTextField itemName;
 	public JTextField price;
 	public JTextField stock;
+	
+	private AddItemUI This=this;
 
 	/**
 	 * Launch the application.
@@ -115,10 +120,22 @@ public class AddItemUI {
 		panel.add(stock);
 
 		JButton submitButton = new JButton("등록");
+		submitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ItemControl itemControl = new ItemControl();
+				itemControl.AddItem(This);
+			}
+		});
 		submitButton.setBounds(195, 10, 97, 23);
 		panel.add(submitButton);
 
 		JButton uploadExcelButton = new JButton("엑셀 업로드");
+		uploadExcelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ItemControl itemControl = new ItemControl();
+				itemControl.AddExcel();
+			}
+		});
 		uploadExcelButton.setBounds(195, 41, 97, 23);
 		panel.add(uploadExcelButton);
 	}

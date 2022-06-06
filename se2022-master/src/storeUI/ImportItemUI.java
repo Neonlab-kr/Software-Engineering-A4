@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JTextPane;
+
+import control.ItemControl;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,6 +22,8 @@ public class ImportItemUI {
 	public JTextField price;
 	public JTextField goodsName;
 	public JTextField barcode;
+	
+	private ImportItemUI This=this;
 
 	/**
 	 * Launch the application.
@@ -129,10 +134,22 @@ public class ImportItemUI {
 		panel.add(barcode);
 
 		JButton searchbtn = new JButton("\uAC80\uC0C9");
+		searchbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ItemControl itemControl = new ItemControl();
+				itemControl.SearchItem(This);
+			}
+		});
 		searchbtn.setBounds(207, 10, 97, 23);
 		panel.add(searchbtn);
 
 		JButton recbtn = new JButton("\uC785\uACE0");
+		recbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ItemControl itemControl = new ItemControl();
+				itemControl.ImportItem(This);
+			}
+		});
 		recbtn.setBounds(207, 39, 97, 23);
 		panel.add(recbtn);
 	}

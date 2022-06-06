@@ -26,16 +26,16 @@ public class ItemControl {
 	}
 
 	public void SearchItem(ItemInfoUI ui) {
-		if (ui.goodsCode.getText() != null) {
+		if (!ui.goodsCode.getText().equals("")) {
 			Item item = new Item();
 			item.getItemDB(ui.goodsCode.getText());
 
 			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
 			model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
 					Integer.toString(item.getStock()) });
-		} else if (ui.goodsName.getText() != null) {
+		} else if (!ui.goodsName.getText().equals("")) {
 			List<Item> itemList = new Item().getItemListDB(ui.goodsName.getText());
-			Iterator it = itemList.iterator();
+			Iterator<Item> it = itemList.iterator();
 			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
 			while (it.hasNext()) {
 				Item item = (Item) it.next();
@@ -47,22 +47,22 @@ public class ItemControl {
 
 	public void DeleteItem(ItemInfoUI ui) {
 		dbConn.getConnection();
-		int col = ui.goodsTable.getSelectedColumn();
-		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(1, col) + ";";
+		int row = ui.goodsTable.getSelectedRow();
+		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(row,1) + ";";
 		dbConn.executeQuery(sql);
 	}
 
 	public void ModifyItem(ItemInfoUI ui) {
 		Connection tmpConn = dbConn.getConnection();
-		int col = ui.goodsTable.getSelectedColumn();
+		int row = ui.goodsTable.getSelectedRow();
 		PreparedStatement pre;
 		try {
 			pre = tmpConn
 					.prepareStatement("update Item_Table set Item_Name=?, Item_Price=?, Stock=?  WHERE Item_Code = ?;");
-			pre.setString(1, (String) ui.goodsTable.getValueAt(2, col));
-			pre.setString(2, (String) ui.goodsTable.getValueAt(3, col));
-			pre.setString(3, (String) ui.goodsTable.getValueAt(4, col));
-			pre.setString(4, (String) ui.goodsTable.getValueAt(1, col));
+			pre.setString(1, (String) ui.goodsTable.getValueAt(row, 1));
+			pre.setString(2, (String) ui.goodsTable.getValueAt(row, 2));
+			pre.setString(3, (String) ui.goodsTable.getValueAt(row, 3));
+			pre.setString(4, (String) ui.goodsTable.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
