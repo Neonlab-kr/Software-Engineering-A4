@@ -67,7 +67,6 @@ public class ItemControl {
 			ui.goodsCode.setText("");
 			ui.goodsName.setText("");
 		}
-		JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void DeleteItem(ItemInfoUI ui) {

@@ -64,6 +64,7 @@ public class Item {
 		} catch (HeadlessException | NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
+		JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 		return itemList;
 	}
 	
