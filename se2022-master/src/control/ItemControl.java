@@ -2,6 +2,7 @@ package control;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -15,48 +16,64 @@ import storeUI.ItemInfoUI;
 
 public class ItemControl {
 	dbConnector dbConn = new dbConnector();
-	
+
 	public void SearchItem(ImportItemUI ui) {
 		Item item = new Item();
-		item.getItemDB(ui.barcode.getText());//바코드를 통해 상품 정보를 받아옴
+		item.getItemDB(ui.barcode.getText());// 바코드를 통해 상품 정보를 받아옴
 		ui.goodsName.setText(item.getItemName());
 		ui.price.setText(Integer.toString(item.getPrice()));
-		ui.goodsNum.setText(Integer.toString(item.getStock()));//ui의 정보 갱신
+		ui.goodsNum.setText(Integer.toString(item.getStock()));// ui의 정보 갱신
 	}
-	
+
 	public void SearchItem(ItemInfoUI ui) {
-		if(ui.goodsCode.getText() != null) {
+		if (ui.goodsCode.getText() != null) {
 			Item item = new Item();
 			item.getItemDB(ui.goodsCode.getText());
-			
+
 			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
-			model.addRow(new Object[] {item.getBarcode(),item.getItemName(),Integer.toString(item.getPrice()), Integer.toString(item.getStock())});
-		}
-		else if(ui.goodsName.getText() != null) {
+			model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
+					Integer.toString(item.getStock()) });
+		} else if (ui.goodsName.getText() != null) {
 			List<Item> itemList = new Item().getItemListDB(ui.goodsName.getText());
 			Iterator it = itemList.iterator();
 			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
-			while(it.hasNext()) {
+			while (it.hasNext()) {
 				Item item = (Item) it.next();
-				model.addRow(new Object[] {item.getBarcode(),item.getItemName(),Integer.toString(item.getPrice()), Integer.toString(item.getStock())});
+				model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
+						Integer.toString(item.getStock()) });
 			}
 		}
 	}
-	
+
 	public void DeleteItem(ItemInfoUI ui) {
-		
+		dbConn.getConnection();
+		int col = ui.goodsTable.getSelectedColumn();
+		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(1, col) + ";";
+		dbConn.executeQuery(sql);
 	}
-	
+
 	public void ModifyItem(ItemInfoUI ui) {
-		
+		Connection tmpConn = dbConn.getConnection();
+		int col = ui.goodsTable.getSelectedColumn();
+		PreparedStatement pre;
+		try {
+			pre = tmpConn
+					.prepareStatement("update Item_Table set Item_Name=?, Item_Price=?, Stock=?  WHERE Item_Code = ?;");
+			pre.setString(1, (String) ui.goodsTable.getValueAt(2, col));
+			pre.setString(2, (String) ui.goodsTable.getValueAt(3, col));
+			pre.setString(3, (String) ui.goodsTable.getValueAt(4, col));
+			pre.setString(4, (String) ui.goodsTable.getValueAt(1, col));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean ImportItem(ImportItemUI ui) {
 		Connection tmpConn = dbConn.getConnection();
 		PreparedStatement pre;
 		try {
-			pre = tmpConn
-					.prepareStatement("update Item_Table set Stock = Stock + "+ ui.recNum.getText() +" where Item_Code=\""+ ui.barcode.getText() + "\";");
+			pre = tmpConn.prepareStatement("update Item_Table set Stock = Stock + " + ui.recNum.getText()
+					+ " where Item_Code=\"" + ui.barcode.getText() + "\";");
 			pre.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
