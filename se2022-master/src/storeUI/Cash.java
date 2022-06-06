@@ -64,7 +64,8 @@ public class Cash {
 		frame = new JFrame();
 		frame.setEnabled(true);
 		frame.setTitle("현금결제");
-		frame.setBounds(100, 100, 335, 140);
+		frame.setSize(335, 140);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		

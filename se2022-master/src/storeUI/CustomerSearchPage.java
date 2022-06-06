@@ -65,7 +65,8 @@ public class CustomerSearchPage {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("고객관리");
-		frame.setBounds(100, 100, 395, 377);
+		frame.setSize(395, 377);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

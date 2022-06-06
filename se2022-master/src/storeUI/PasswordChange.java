@@ -48,7 +48,8 @@ public class PasswordChange {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("비밀번호 변경");
-		frame.setBounds(100, 100, 380, 141);
+		frame.setSize(380, 141);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

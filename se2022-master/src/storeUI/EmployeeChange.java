@@ -50,7 +50,8 @@ public class EmployeeChange {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("직원교대");
-		frame.setBounds(100, 100, 455, 116);
+		frame.setSize(455, 116);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);

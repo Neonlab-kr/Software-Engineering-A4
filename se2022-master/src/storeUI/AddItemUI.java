@@ -52,7 +52,8 @@ public class AddItemUI {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("상품등록");
-		frame.setBounds(100, 100, 359, 249);
+		frame.setSize(359, 249);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

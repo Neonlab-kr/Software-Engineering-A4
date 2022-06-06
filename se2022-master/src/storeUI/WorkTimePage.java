@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import java.text.ParseException;
+import java.sql.*;
 
 public class WorkTimePage {
 
@@ -31,7 +32,6 @@ public class WorkTimePage {
 	private JButton backbtn;
 	private JPanel infoPanel;
 	private JScrollPane scrollPane;
-	private SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 	private String date;
 	private String name;
 	/**
@@ -63,14 +63,15 @@ public class WorkTimePage {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 470, 300);
+		frame.setSize(470, 300);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JTextPane empNameTxt = new JTextPane();
 		empNameTxt.setEditable(false);
 		empNameTxt.setBackground(UIManager.getColor("CheckBox.background"));
-		empNameTxt.setText("직원이름");
+		empNameTxt.setText("직원ID");
 		empNameTxt.setBounds(12, 10, 55, 21);
 		frame.getContentPane().add(empNameTxt);
 		
@@ -78,7 +79,7 @@ public class WorkTimePage {
 		dateTxt.setEditable(false);
 		dateTxt.setBackground(UIManager.getColor("CheckBox.background"));
 		dateTxt.setText("일자");
-		dateTxt.setBounds(36, 41, 31, 21);
+		dateTxt.setBounds(12, 41, 31, 21);
 		frame.getContentPane().add(dateTxt);
 		
 		nameTextField = new JTextField();
@@ -94,22 +95,16 @@ public class WorkTimePage {
 				Object[][] table;
 				date = DateTextField.getText();
 				name = nameTextField.getText();
-				if (!date.equals("")) {
-					try {
-						table = search.getInfo(formatter.parse(date));
-						setTable(table);
-					} catch (ParseException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, "올바른 형식이 아닙니다(ex.20220504)).","타입 에러", JOptionPane.PLAIN_MESSAGE);
-						e1.printStackTrace();
-					}
+				if (!name.equals("") && !date.equals("")) {
+					JOptionPane.showMessageDialog(null, "한 가지 값만 입력해주세요.","입력 에러", JOptionPane.PLAIN_MESSAGE);
+				}
+				else if (!date.equals("")) {
+					table = search.getInfo(java.sql.Date.valueOf(date));
+					setTable(table);
 				}
 				else if (!name.equals("")) {
 					table = search.getInfo(name);
 					setTable(table);
-				}
-				else if (!name.equals("") && !date.equals("")) {
-					JOptionPane.showMessageDialog(null, "한 가지 값만 입력해주세요.","입력 에러", JOptionPane.PLAIN_MESSAGE);
 				}
 				else
 					JOptionPane.showMessageDialog(null, "값을 입력하지 않았습니다. ","입력 에러", JOptionPane.PLAIN_MESSAGE);
@@ -118,7 +113,7 @@ public class WorkTimePage {
 		frame.getContentPane().add(SearchButton);
 		
 		DateTextField = new JTextField();
-		DateTextField.setForeground(Color.LIGHT_GRAY);
+		DateTextField.setForeground(Color.BLACK);
 		DateTextField.setColumns(10);
 		DateTextField.setBounds(79, 41, 161, 21);
 		frame.getContentPane().add(DateTextField);
@@ -158,8 +153,6 @@ public class WorkTimePage {
 				return columnEditables[column];
 			}
 		});
-		workTable.getColumnModel().getColumn(0).setPreferredWidth(60);
-		workTable.getColumnModel().getColumn(0).setMaxWidth(60);
 	}
 	public void setVisible(boolean b) {
 		frame.setVisible(b);

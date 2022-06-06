@@ -56,7 +56,8 @@ public class ItemInfoUI {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("상품정보");
-		frame.setBounds(100, 100, 454, 439);
+		frame.setSize(454, 439);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

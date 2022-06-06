@@ -69,7 +69,8 @@ public class ReceiptCheckPage {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("영수증 조회");
-		frame.setBounds(100, 100, 392, 380);
+		frame.setSize(392, 380);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

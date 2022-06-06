@@ -48,7 +48,8 @@ public class PasswordCheck {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("로그인");
-		frame.setBounds(100, 100, 448, 81);
+		frame.setSize(448, 81);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

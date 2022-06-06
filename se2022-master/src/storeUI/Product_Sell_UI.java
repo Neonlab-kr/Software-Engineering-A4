@@ -67,7 +67,8 @@ public class Product_Sell_UI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("상품 판매");
-		frame.setBounds(100, 100, 700, 600);
+		frame.setSize(700, 600);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

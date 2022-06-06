@@ -51,7 +51,8 @@ public class Manager_UI implements Runnable {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("관리자");
-		frame.setBounds(100, 100, 512, 371);
+		frame.setSize(512, 371);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

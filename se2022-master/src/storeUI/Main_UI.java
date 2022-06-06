@@ -71,7 +71,8 @@ public class Main_UI implements Runnable {
 		frame = new JFrame();
 		frame.setTitle("메인화면");
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 600, 448);
+		frame.setSize(600, 448);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

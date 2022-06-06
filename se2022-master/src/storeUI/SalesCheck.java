@@ -61,7 +61,8 @@ public class SalesCheck {
 		frame = new JFrame();
 		frame.setTitle("매장 매출");
 		frame.setType(Type.POPUP);
-		frame.setBounds(100, 100, 537, 494);
+		frame.setSize(537, 494);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
