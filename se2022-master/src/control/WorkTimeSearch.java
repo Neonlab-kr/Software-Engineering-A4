@@ -2,13 +2,13 @@ package control;
 
 import java.sql.*;
 
-import SQL.dbConnector;
+import SQL.dbConnecter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 
 public class WorkTimeSearch {
-	SQL.dbConnector db = new SQL.dbConnector();
+	SQL.dbConnecter db = new SQL.dbConnecter();
 	
 	private Object[][] userData;
 	

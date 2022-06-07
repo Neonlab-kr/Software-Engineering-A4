@@ -5,7 +5,7 @@ import java.sql.*;
 public class PasswordControl {
 	private String password;
 
-	SQL.dbConnector db = new SQL.dbConnector();
+	SQL.dbConnecter db = new SQL.dbConnecter();
 
 	public boolean pwCheck(String pw) {
 		boolean check = false;

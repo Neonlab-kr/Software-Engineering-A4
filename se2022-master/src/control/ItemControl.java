@@ -13,7 +13,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import SQL.dbConnector;
+import SQL.dbConnecter;
 import entity.Item;
 import storeUI.AddItemUI;
 import storeUI.ImportItemUI;
@@ -30,7 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ItemControl {
-	dbConnector dbConn = new dbConnector();
+	dbConnecter dbConn = new dbConnecter();
 
 	public void SearchItem(ImportItemUI ui) {
 		Item item = new Item();

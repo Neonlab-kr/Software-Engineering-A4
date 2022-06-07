@@ -4,13 +4,13 @@ import java.sql.*;
 
 import javax.swing.JOptionPane;
 
-public class dbConnector {
+public class dbConnecter {
 
 	Connection conn; // java.sql.Connection
 	Statement stmt = null;
 
 	
-	public dbConnector() {
+	public dbConnecter() {
 		
 		// 생성자가 실행되면 DB에 자동 연결되어 Connection 객체 생성
 		

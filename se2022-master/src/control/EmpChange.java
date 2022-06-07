@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class EmpChange {
-	SQL.dbConnector db = new SQL.dbConnector();
+	SQL.dbConnecter db = new SQL.dbConnecter();
 	Connection conn = db.getConnection();
 	private String id;
 	private String nowuser;

@@ -6,12 +6,12 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import SQL.dbConnector;
+import SQL.dbConnecter;
 import entity.Staff;
 import storeUI.StaffSearchPage;
 
 public class StaffControl {
-	dbConnector dbConn = new dbConnector();
+	dbConnecter dbConn = new dbConnecter();
 	
 	public void StaffSearch(StaffSearchPage ui) {
 		if(ui.SearchOptionSel.getSelectedItem().toString().equals("ID")) {

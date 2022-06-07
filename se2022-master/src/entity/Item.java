@@ -7,28 +7,28 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
-import SQL.dbConnector;
+import SQL.dbConnecter;
 
 public class Item {
 	private String barcode;
 	private String itemName;
 	private int price;
 	private int stock;
-	private dbConnector db;
+	private dbConnecter db;
 	
 	public Item(){
 		this.barcode = "";
 		this.itemName = "";
 		this.price =0;
 		this.stock =0;
-		db = new dbConnector();
+		db = new dbConnecter();
 	}
 	public Item(String barcode,String itemName,int stock,int price){
 		this.barcode = barcode;
 		this.itemName = itemName;
 		this.price = price;
 		this.stock = stock;
-		db = new dbConnector();
+		db = new dbConnecter();
 	}
 	
 	public void getItemDB(String itemID) {

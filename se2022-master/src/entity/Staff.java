@@ -7,24 +7,24 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
-import SQL.dbConnector;
+import SQL.dbConnecter;
 
 public class Staff {
 	private String id;
 	private String name;
 	private String phone;
-	private dbConnector db;
+	private dbConnecter db;
 	
 	
 	public Staff() {
-		db = new dbConnector();
+		db = new dbConnecter();
 	}
 	
 	public Staff(String id, String name, String phone) {
 		this.id=id;
 		this.name=name;
 		this.phone=phone;
-		db = new dbConnector();
+		db = new dbConnecter();
 	}
 	
 	public void getStaffDB(String id) {

@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import SQL.dbConnector;
+import SQL.dbConnecter;
 
 public class Receipt {
 	private int receiptID;
@@ -13,7 +13,7 @@ public class Receipt {
 	private String purchaseDate;
 	private String paymentMethod;
 	private int balance;
-	private dbConnector db;
+	private dbConnecter db;
 	
 	public Receipt() {
 		this.receiptID = 0;
@@ -21,7 +21,7 @@ public class Receipt {
 		this.purchaseDate = "";
 		this.paymentMethod = "";
 		this.balance = 0;
-		db = new dbConnector();
+		db = new dbConnecter();
 	}
 	
 	public void loadReceipt(int receiptID) {//영수증 정보를 불러와서 저장
