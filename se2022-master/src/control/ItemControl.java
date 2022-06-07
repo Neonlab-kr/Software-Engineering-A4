@@ -45,7 +45,7 @@ public class ItemControl {
 			Item item = new Item();
 			item.getItemDB(ui.goodsCode.getText());
 
-			if (item.getBarcode().equals("")) {
+			if (!item.getBarcode().equals("")) {
 				DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
 				model.setNumRows(0);
 				model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
