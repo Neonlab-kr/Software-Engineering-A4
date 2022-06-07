@@ -96,18 +96,22 @@ public class WorkTimePage {
 				date = DateTextField.getText();
 				name = nameTextField.getText();
 				if (!name.equals("") && !date.equals("")) {
-					JOptionPane.showMessageDialog(null, "한 가지 값만 입력해주세요.","입력 에러", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "한 가지 값만 입력해주세요.","입력 에러", JOptionPane.ERROR_MESSAGE);
 				}
 				else if (!date.equals("")) {
+					try {
 					table = search.getInfo(java.sql.Date.valueOf(date));
 					setTable(table);
+					} catch (IllegalArgumentException e1) {
+						JOptionPane.showMessageDialog(null, "날짜의 양식이 맞지 않습니다.","입력 에러", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				else if (!name.equals("")) {
 					table = search.getInfo(name);
 					setTable(table);
 				}
 				else
-					JOptionPane.showMessageDialog(null, "값을 입력하지 않았습니다. ","입력 에러", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "값을 입력하지 않았습니다. ","입력 에러", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		frame.getContentPane().add(SearchButton);

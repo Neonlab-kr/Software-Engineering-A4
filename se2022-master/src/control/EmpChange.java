@@ -21,14 +21,16 @@ public class EmpChange {
 	String sql_changeduser = "UPDATE Attendance_Table SET End_Timestamp=? WHERE End_Timestamp IS NULL";
 	String sql_selectuser = "SELECT Employee_ID FROM Attendance_Table WHERE End_Timestamp IS NULL";
 
-	ResultSet un = db.executeQuery("SELECT Employee_ID FROM Employee_Table");
+	
 	ResultSet nowU = db.executeQuery(sql_selectuser);
 	ResultSet attTable = db.executeQuery("SELECT Employee_ID FROM Attendance_Table");
 
 	public boolean idChange(String input) {//입력한 직원이 직원 테이블에 존재하는지 체크함
-		boolean check = true;
+		ResultSet un = db.executeQuery("SELECT Employee_ID FROM Employee_Table");
+		boolean check = false;
 		inputid = input;
 		try {
+			un.beforeFirst();
 			while (un.next()) {
 				id = un.getString("Employee_ID");
 				if (id.equals(inputid)) {

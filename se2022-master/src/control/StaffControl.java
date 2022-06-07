@@ -45,6 +45,9 @@ public class StaffControl {
 			}
 			ui.SearchTextField.setText("");
 		}
+		ui.idTextField.setText("");
+		ui.nameTextField.setText("");
+		ui.phoneTextField.setText("");
 	}
 	
 	public void StaffRegister(StaffSearchPage ui) {
@@ -57,11 +60,15 @@ public class StaffControl {
 			pre.setString(2, ui.nameTextField.getText());
 			pre.setString(3, ui.phoneTextField.getText());
 			pre.executeUpdate();
+			DefaultTableModel model = (DefaultTableModel) ui.StaffTable.getModel();
+			model.addRow(new Object[] { ui.idTextField.getText(), ui.nameTextField.getText(),ui.phoneTextField.getText()});
 			JOptionPane.showMessageDialog(null, "직원등록이 완료되었습니다", "등록 완료", JOptionPane.INFORMATION_MESSAGE);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "직원등록에 실패하였습니다", "등록 실패", JOptionPane.ERROR_MESSAGE);
 		}
+		ui.idTextField.setText("");
+		ui.nameTextField.setText("");
+		ui.phoneTextField.setText("");
 	}
 	
 	public void StaffAmend(StaffSearchPage ui) {
@@ -94,6 +101,9 @@ public class StaffControl {
 		dbConn.executeQuery(sql);
 		((DefaultTableModel)ui.StaffTable.getModel()).removeRow(row);
 		JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다", "삭제 완료", JOptionPane.INFORMATION_MESSAGE);
+		ui.idTextField.setText("");
+		ui.nameTextField.setText("");
+		ui.phoneTextField.setText("");
 	}
 
 }

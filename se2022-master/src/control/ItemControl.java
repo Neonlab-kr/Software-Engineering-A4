@@ -45,13 +45,15 @@ public class ItemControl {
 			Item item = new Item();
 			item.getItemDB(ui.goodsCode.getText());
 
-			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
-			model.setNumRows(0);
-			model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
-					Integer.toString(item.getStock()) });
+			if (item.getBarcode().equals("")) {
+				DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
+				model.setNumRows(0);
+				model.addRow(new Object[] { item.getBarcode(), item.getItemName(), Integer.toString(item.getPrice()),
+						Integer.toString(item.getStock()) });
+			}
 			ui.goodsCode.setText("");
 			ui.goodsName.setText("");
-		} else if (!ui.goodsName.getText().equals("")) {
+		} else {
 			List<Item> itemList = new Item().getItemListDB(ui.goodsName.getText());
 			Iterator<Item> it = itemList.iterator();
 			DefaultTableModel model = (DefaultTableModel) ui.goodsTable.getModel();
@@ -63,9 +65,6 @@ public class ItemControl {
 			}
 			ui.goodsCode.setText("");
 			ui.goodsName.setText("");
-		} else {
-			ui.goodsCode.setText("");
-			ui.goodsName.setText("");
 		}
 	}
 
@@ -74,7 +73,7 @@ public class ItemControl {
 		int row = ui.goodsTable.getSelectedRow();
 		String sql = "DELETE FROM Item_Table WHERE Item_Code = " + ui.goodsTable.getValueAt(row, 0) + ";";
 		dbConn.executeQuery(sql);
-		((DefaultTableModel)ui.goodsTable.getModel()).removeRow(row);
+		((DefaultTableModel) ui.goodsTable.getModel()).removeRow(row);
 		JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다", "삭제 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
@@ -90,18 +89,21 @@ public class ItemControl {
 				pre.setString(3, (String) ui.goodsTable.getValueAt(row, 3));
 				pre.setString(4, (String) ui.goodsTable.getValueAt(row, 0));
 				pre.executeUpdate();
-				JOptionPane.showMessageDialog(null, "수정이 완료되었습니다", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "수정이 실패하였습니다", "수정 실패", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		JOptionPane.showMessageDialog(null, "수정이 완료되었습니다", "수정 완료", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void ImportItem(ImportItemUI ui) {
 		Connection tmpConn = dbConn.getConnection();
 		PreparedStatement pre;
 		try {
+			if(Integer.parseInt(ui.recNum.getText())<0){
+				throw new SQLException();
+			}
 			pre = tmpConn.prepareStatement("update Item_Table set Stock = Stock + " + ui.recNum.getText()
 					+ " where Item_Code=\"" + ui.barcode.getText() + "\";");
 			pre.executeUpdate();
@@ -121,9 +123,10 @@ public class ItemControl {
 	public void AddExcel(String filePath) {
 		try {
 			Connection tmpConn = dbConn.getConnection();
-			PreparedStatement pre=tmpConn
-					.prepareStatement("insert into Item_Table(Item_Code,Item_Name,Item_Price,Stock) VALUES(?,?,?,?);");;
-			
+			PreparedStatement pre = tmpConn
+					.prepareStatement("insert into Item_Table(Item_Code,Item_Name,Item_Price,Stock) VALUES(?,?,?,?);");
+			;
+
 			Workbook workbook = null;
 			File file = new File(filePath);
 			FileInputStream fileInputStream = new FileInputStream(file);
@@ -172,7 +175,7 @@ public class ItemControl {
 								break;
 							}
 						}
-						pre.setString(columnindex+1, value);
+						pre.setString(columnindex + 1, value);
 					}
 				}
 				pre.executeUpdate();
@@ -188,6 +191,9 @@ public class ItemControl {
 		Connection tmpConn = dbConn.getConnection();
 		PreparedStatement pre;
 		try {
+			if(Integer.parseInt(ui.price.getText())<0) {
+				throw new SQLException();
+			}
 			pre = tmpConn
 					.prepareStatement("insert into Item_Table(Item_Code,Item_Name,Item_Price,Stock) VALUES(?,?,?,?);");
 			pre.setString(1, ui.barcode.getText());
@@ -200,5 +206,9 @@ public class ItemControl {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "상품등록에 실패하였습니다", "등록 실패", JOptionPane.ERROR_MESSAGE);
 		}
+		ui.barcode.setText("");
+		ui.itemName.setText("");
+		ui.price.setText("");
+		ui.stock.setText("");
 	}
 }

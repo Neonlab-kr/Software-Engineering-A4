@@ -32,17 +32,17 @@ public class Item {
 	}
 	
 	public void getItemDB(String itemID) {
-		this.barcode = itemID;
-		String sql = "SELECT Item_Name , Item_Price, Stock FROM Item_Table WHERE Item_Code = '" + barcode + "';";
+		String sql = "SELECT Item_Code, Item_Name , Item_Price, Stock FROM Item_Table WHERE Item_Code = '" + barcode + "';";
 		try {
 			ResultSet rs = db.executeQuery(sql);
 			if(!rs.isBeforeFirst()) {
 				JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "결과 없음", JOptionPane.WARNING_MESSAGE);
 			}
 			while(rs.next()) {
-				this.itemName = rs.getString(1);
-				this.price = rs.getInt(2);
-				this.stock =rs.getInt(3);
+				this.barcode = rs.getString(1);
+				this.itemName = rs.getString(2);
+				this.price = rs.getInt(3);
+				this.stock =rs.getInt(4);
 			}
 		} catch (SQLException e) {
 			System.out.println("DB연결이 실패하거나, SQL문에 오류가 있습니다.");
@@ -59,12 +59,12 @@ public class Item {
 			} else {
 				while(src.next()) {
 					itemList.add(new Item(src.getString(1),src.getString(2),Integer.parseInt(src.getString(4)),Integer.parseInt(src.getString(3))));
-				}	
+				}
+				JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 			}
 		} catch (HeadlessException | NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
-		JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 		return itemList;
 	}
 	

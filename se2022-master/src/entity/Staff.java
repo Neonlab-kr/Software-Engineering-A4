@@ -54,12 +54,12 @@ public class Staff {
 			} else {
 				while(src.next()) {
 					staffList.add(new Staff(src.getString(1),src.getString(2),src.getString(3)));
-				}	
+				}
+				JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 			}
 		} catch (HeadlessException | NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
-		JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 		return staffList;
 	}
 	
@@ -73,12 +73,12 @@ public class Staff {
 			} else {
 				while(src.next()) {
 					staffList.add(new Staff(src.getString(1),src.getString(2),src.getString(3)));
-				}	
+				}
+				JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 			}
 		} catch (HeadlessException | NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
-		JOptionPane.showMessageDialog(null, "검색이 완료되었습니다", "검색 완료", JOptionPane.INFORMATION_MESSAGE);
 		return staffList;
 	}
 	
