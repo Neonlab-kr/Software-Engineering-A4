@@ -32,7 +32,7 @@ public class Item {
 	}
 	
 	public void getItemDB(String itemID) {
-		String sql = "SELECT Item_Code, Item_Name , Item_Price, Stock FROM Item_Table WHERE Item_Code = '" + barcode + "';";
+		String sql = "SELECT Item_Code, Item_Name , Item_Price, Stock FROM Item_Table WHERE Item_Code = '" + itemID + "';";
 		try {
 			ResultSet rs = db.executeQuery(sql);
 			if(!rs.isBeforeFirst()) {
