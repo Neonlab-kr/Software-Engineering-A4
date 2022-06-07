@@ -19,7 +19,7 @@ public class EmployeeChange {
 	private JTextField empNow;
 	private JTextField changedEmp;
 	private JButton backbtn;
-
+	private Main_UI main_UI;
 	/**
 	 * Launch the application.
 	 */
@@ -40,6 +40,10 @@ public class EmployeeChange {
 	 * Create the application.
 	 */
 	public EmployeeChange() {
+		initialize();
+	}
+	public EmployeeChange(Main_UI main) {
+		main_UI = main;
 		initialize();
 	}
 
@@ -92,6 +96,7 @@ public class EmployeeChange {
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "직원이 변경되었습니다.","교대 성공", JOptionPane.PLAIN_MESSAGE);
+					main_UI.setEmpText();
 					frame.dispose();
 				}
 			}
