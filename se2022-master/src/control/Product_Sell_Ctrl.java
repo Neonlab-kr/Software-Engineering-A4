@@ -29,7 +29,6 @@ public class Product_Sell_Ctrl {
 			}
 			if(item.getItemName().equals("")) {//해당하는 아이템이 없는경우
 				JOptionPane.showMessageDialog(null, "해당되는 상품이 없거나 잘못된 입력방식입니다.", "상품 번호 오류", JOptionPane.ERROR_MESSAGE);
-				System.out.println("해당되는 상품이 없거나 잘못된 입력방식입니다.");
 			}else {	//추가된 상품을 장바구니에 추가
 				temp[num][0] = item.getItemName();
 				temp[num][1] = item.getStock();
@@ -40,7 +39,6 @@ public class Product_Sell_Ctrl {
 			if(item.getItemName().equals("")) {//해당하는 아이템이 없는경우
 				temp = null;
 				JOptionPane.showMessageDialog(null, "해당되는 상품이 없거나 잘못된 입력방식입니다.", "상품 번호 오류", JOptionPane.ERROR_MESSAGE);
-				System.out.println("해당되는 상품이 없거나 잘못된 입력방식입니다.");
 			}else {//추가된 상품을 장바구니에 추가
 				temp = new Object[1][3];
 				temp[0][0] = item.getItemName();

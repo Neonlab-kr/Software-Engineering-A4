@@ -22,6 +22,8 @@ public class ReceiptCheck {
 		for(int i =0;i<itemlist.size();i++) {//영수증에 저장된 상품정보를 양식에 맞게 추가
 			receiptString.append("\r\n");
 			receiptString.append(itemlist.get(i).getItemName());
+			if(itemlist.get(i).getItemName().length() <=5)
+				receiptString.append("\t");
 			receiptString.append("\t");
 			receiptString.append(itemlist.get(i).getPrice());
 			receiptString.append("\t");
