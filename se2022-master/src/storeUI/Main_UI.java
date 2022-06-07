@@ -176,7 +176,7 @@ public class Main_UI implements Runnable {
 		JButton empChangebtn = new JButton("직원 교대");
 		empChangebtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EmployeeChange ecframe = new EmployeeChange();
+				EmployeeChange ecframe = new EmployeeChange(setMy());
 				ecframe.setVisible(true);
 			}
 		});
@@ -203,13 +203,18 @@ public class Main_UI implements Runnable {
 	public void dispose() {
 		frame.dispose();
 	}
+	public void setEmpText() {
+		nowEmp.setText("근무 직원: " + nowU.getName());
+	}
+	public Main_UI setMy() {
+		return this;
+	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		while (true) {
 			clock.setText(sf.format(new Date()));
-			nowEmp.setText("근무 직원: " + nowU.getName());
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
