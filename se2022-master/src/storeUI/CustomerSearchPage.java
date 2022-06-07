@@ -3,6 +3,7 @@ package storeUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
@@ -78,6 +79,11 @@ public class CustomerSearchPage {
 		JButton btnNewButton = new JButton("조회");
 		btnNewButton.setBounds(301, 10, 66, 21);
 		frame.getContentPane().add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "미구현 기능입니다. ","미구현 기능", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
 		
 		btnNewButton_1 = new JButton("뒤로가기");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -168,14 +174,29 @@ public class CustomerSearchPage {
 		
 		JButton btnNewButton_2 = new JButton("등록");
 		btnNewButton_2.setBounds(267, 277, 100, 51);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "미구현 기능입니다. ","미구현 기능", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
 		frame.getContentPane().add(btnNewButton_2);
 		
 		JButton btnNewButton_2_1 = new JButton("삭제");
 		btnNewButton_2_1.setBounds(79, 230, 85, 36);
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "미구현 기능입니다. ","미구현 기능", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
 		frame.getContentPane().add(btnNewButton_2_1);
 		
 		JButton btnNewButton_2_1_1 = new JButton("수정");
 		btnNewButton_2_1_1.setBounds(175, 230, 85, 36);
+		btnNewButton_2_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "미구현 기능입니다. ","미구현 기능", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
 		frame.getContentPane().add(btnNewButton_2_1_1);
 	}
 	public void setVisible(boolean b) {

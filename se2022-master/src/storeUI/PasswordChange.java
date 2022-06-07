@@ -3,6 +3,7 @@ package storeUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JTextPane;
@@ -92,6 +93,7 @@ public class PasswordChange {
 		JButton modifybtn = new JButton("수정");
 		modifybtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "미구현 기능입니다. ","미구현 기능", JOptionPane.PLAIN_MESSAGE);
 				Manager_UI mmframe = new Manager_UI();
 				mmframe.setVisible(true);
 				frame.dispose();

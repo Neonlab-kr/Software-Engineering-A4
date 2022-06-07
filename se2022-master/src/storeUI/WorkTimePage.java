@@ -116,6 +116,7 @@ public class WorkTimePage {
 		DateTextField.setForeground(Color.BLACK);
 		DateTextField.setColumns(10);
 		DateTextField.setBounds(79, 41, 161, 21);
+		DateTextField.setToolTipText("ex)2022-06-04");
 		frame.getContentPane().add(DateTextField);
 		
 		backbtn = new JButton("뒤로가기");

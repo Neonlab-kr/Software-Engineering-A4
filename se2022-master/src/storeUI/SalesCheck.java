@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
@@ -74,6 +76,11 @@ public class SalesCheck {
 		
 		JButton yearInputbtn = new JButton("입력");
 		yearInputbtn.setBounds(162, 420, 68, 24);
+		yearInputbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "미구현 기능입니다. ","미구현 기능", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
 		frame.getContentPane().add(yearInputbtn);
 		
 		JPanel JanToJunPane = new JPanel();
