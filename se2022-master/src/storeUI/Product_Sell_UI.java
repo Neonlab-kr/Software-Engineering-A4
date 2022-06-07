@@ -276,7 +276,7 @@ public class Product_Sell_UI {
 				int col = e.getColumn();
 				TableModel model = (TableModel)e.getSource();
 				Object dataObject = model.getValueAt(row, col);//수정된 수량값을 받아온다
-				if(!sell_Ctrl.updateStock(row,dataObject)) {//수량이 정상적으로 업데이트 됬을경우
+				if(sell_Ctrl.updateStock(row,dataObject)) {//수량이 정상적으로 업데이트 됬을경우
 					setTable(sell_Ctrl.getProduct());//테이블을 업데이트 해줌으로서 금액도 업데이트된다.
 				}
 				all_money.setText(sell_Ctrl.calculator_totalMoney());//총금액도 업데이트 해준다.
